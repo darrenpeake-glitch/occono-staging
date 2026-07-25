@@ -1,0 +1,27 @@
+/* Keep live portfolio previews visually desktop-sized inside responsive cards. */
+.browser,
+.mini-browser{
+  overflow:hidden;
+}
+.website-preview-frame{
+  display:block;
+  width:200% !important;
+  height:200% !important;
+  max-width:none !important;
+  min-height:0;
+  border:0;
+  background:#fff;
+  pointer-events:none;
+  transform:scale(.5) !important;
+  transform-origin:top left !important;
+  aspect-ratio:auto !important;
+}
+
+/* Use a slightly wider virtual viewport on narrow landing-page layouts. */
+@media(max-width:700px){
+  .website-preview-frame{
+    width:250% !important;
+    height:250% !important;
+    transform:scale(.4) !important;
+  }
+}
