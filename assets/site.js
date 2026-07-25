@@ -1,5 +1,13 @@
-
 (() => {
+  const previews = document.querySelectorAll('.browser iframe, .mini-browser iframe');
+  previews.forEach((preview) => {
+    preview.setAttribute('scrolling', 'no');
+    preview.setAttribute('tabindex', '-1');
+    preview.setAttribute('aria-hidden', 'true');
+    preview.style.pointerEvents = 'none';
+    preview.style.overflow = 'hidden';
+  });
+
   const form = document.getElementById('project-form');
   if (!form) return;
   const status = form.querySelector('.form-status');
