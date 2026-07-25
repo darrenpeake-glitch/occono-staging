@@ -1,4 +1,9 @@
 (() => {
+  const refinementStyles = document.createElement('link');
+  refinementStyles.rel = 'stylesheet';
+  refinementStyles.href = 'assets/hero-refinement.css';
+  document.head.appendChild(refinementStyles);
+
   const previews = document.querySelectorAll('.browser iframe, .mini-browser iframe');
   previews.forEach((preview) => {
     preview.setAttribute('scrolling', 'no');
