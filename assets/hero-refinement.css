@@ -35,6 +35,8 @@
 }
 .stage-note span{
   text-align:right;
+  font-size:.74rem;
+  font-weight:780;
 }
 @media (max-width:980px){
   .professional-hero-stage:before{
@@ -46,9 +48,11 @@
     bottom:10px;
     gap:16px;
   }
-  .stage-note b,
-  .stage-note span{
+  .stage-note b{
     font-size:.72rem;
+  }
+  .stage-note span{
+    font-size:.69rem;
   }
 }
 @media (max-width:700px){
