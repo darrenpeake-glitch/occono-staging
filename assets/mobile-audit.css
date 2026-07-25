@@ -1,0 +1,49 @@
+/* Shared mobile QA safeguards — homepage and concept sites */
+html,body{max-width:100%;overflow-x:hidden}
+img,svg,video,iframe{max-width:100%}
+@media(max-width:700px){
+  .wrap{width:min(calc(100% - 28px),var(--max,1180px))}
+  input,select,textarea,button{font-size:16px}
+  .topbar{height:68px}
+  .topbar nav{gap:10px}
+  .topbar nav>a:not(.button){display:none}
+  .topbar .button-small{padding:10px 13px;font-size:.76rem}
+  .occono-brand{font-size:1.08rem}
+  .professional-hero-grid{padding:52px 0 48px;gap:38px;min-height:auto}
+  .professional-hero h1{font-size:clamp(3.1rem,15.5vw,4.8rem);line-height:.92}
+  .hero-actions{align-items:flex-start;flex-direction:column;gap:14px}
+  .professional-proof{grid-template-columns:1fr;margin-top:28px;padding-top:0}
+  .professional-hero-stage{padding:22px 0 42px 10px}
+  .professional-browser{width:100%;height:300px}
+  .stage-label{min-width:165px;padding:10px 13px}
+  .stage-note{left:12px!important;right:12px!important;bottom:12px!important}
+  .professional-band .wrap{grid-template-columns:1fr 1fr}
+  .credibility-grid{grid-template-columns:1fr}
+  .credibility-lead{grid-column:auto}
+  .section-head{display:block}
+  .section-head>p{margin-top:20px}
+  .work-section,.services-section,.why-section,.process-section,.pricing-section,.faq-section{padding-top:72px;padding-bottom:72px}
+  .feature-project,.project-grid,.project-wide,.case-study-strip,.comparison-card,.services-layout,.why-card,.faq-layout,.contact-card{grid-template-columns:1fr}
+  .project-card,.feature-project{min-height:0}
+  .project-screen{padding:18px}
+  .project-screen .browser{width:100%;height:285px;transform:none}
+  .mini-browser{height:255px}
+  .project-wide{grid-column:auto}
+  .before-after,.why-grid,.pricing-grid,.process-line,.form-row{grid-template-columns:1fr}
+  .why-grid div,.why-grid div:nth-child(odd){border-right:0}
+  .process-line article{min-height:0;border-right:0;border-bottom:1px solid var(--line)}
+  .price-card.featured{transform:none;margin-top:12px}
+  .contact-card form{padding:20px 16px}
+  .foot-main{grid-template-columns:1fr;text-align:left}
+  .foot-main>a:last-child{text-align:left}
+  .foot-base{align-items:flex-start;flex-direction:column}
+  .back{right:10px!important;bottom:10px!important;padding:9px 12px!important;font-size:11px!important}
+  .disclosure{left:10px!important;right:105px!important;bottom:10px!important;font-size:9px!important;padding:7px 9px!important}
+  .availability,.booking{position:relative!important;inset:auto!important;margin:0 auto!important;width:min(calc(100% - 28px),1160px)!important}
+}
+@media(max-width:390px){
+  .professional-hero h1{font-size:3rem}
+  .stage-note span{display:none!important}
+  .professional-band .wrap{grid-template-columns:1fr}
+  .disclosure{display:none!important}
+}
