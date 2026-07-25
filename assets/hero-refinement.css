@@ -1,45 +1,44 @@
-/* Hero preview refinement: keep supporting copy integrated with the composition. */
+/* Hero preview refinement: a single integrated caption strip beneath the preview. */
 .stage-note{
   position:relative;
-  right:auto;
-  bottom:auto;
-  z-index:2;
+  inset:auto;
+  z-index:3;
+  width:100%;
   min-width:0;
-  margin:18px 0 0;
-  padding:14px 0 0;
-  background:transparent;
+  margin:0;
+  padding:16px 20px 18px;
+  background:var(--paper);
   border:0;
   border-top:1px solid var(--line);
-  display:flex;
-  align-items:baseline;
-  justify-content:space-between;
-  gap:24px;
+  display:block;
+  color:var(--ink);
+}
+.stage-note b,
+.stage-note span{
+  display:block;
+  text-align:left;
 }
 .stage-note b{
-  font-size:.82rem;
+  font-size:.84rem;
+  line-height:1.3;
   letter-spacing:-.01em;
 }
 .stage-note span{
-  margin-top:0;
-  font-size:.7rem;
-  text-align:right;
+  margin-top:4px;
+  font-size:.72rem;
+  line-height:1.4;
   color:var(--muted);
 }
 @media (max-width:980px){
   .stage-note{
-    left:auto;
-    right:auto;
-    padding:12px 0 0;
-    margin-top:14px;
+    padding:14px 16px 16px;
   }
 }
 @media (max-width:700px){
   .stage-note{
-    display:block;
+    padding:13px 14px 15px;
   }
   .stage-note span{
     display:block;
-    margin-top:4px;
-    text-align:left;
   }
 }
