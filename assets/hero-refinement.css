@@ -82,6 +82,27 @@
   font-size:.74rem;
   font-weight:780;
 }
+
+/* Persistent customer route: keep navigation available throughout the page. */
+.site-header{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  width:100%;
+  z-index:100;
+  transition:box-shadow .2s ease,background-color .2s ease;
+}
+body{
+  padding-top:88px;
+}
+.site-header.is-scrolled{
+  box-shadow:0 8px 24px rgba(32,32,30,.11);
+}
+section[id]{
+  scroll-margin-top:108px;
+}
+
 @media (max-width:980px){
   .professional-hero-stage:before{
     right:0;
@@ -109,6 +130,12 @@
   }
 }
 @media (max-width:700px){
+  body{
+    padding-top:68px;
+  }
+  section[id]{
+    scroll-margin-top:84px;
+  }
   .stage-label{
     top:10px;
     left:10px;
