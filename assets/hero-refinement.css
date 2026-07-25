@@ -1,7 +1,57 @@
-/* Hero preview caption: integrated directly into the orange stage frame. */
+/* Hero preview caption and featured-project tab integrated into the orange stage. */
 .professional-hero-stage:before{
   right:0;
 }
+
+/* The browser address adds visual noise beneath the project tab. */
+.professional-browser .browser-bar span{
+  visibility:hidden;
+}
+
+.stage-label{
+  position:absolute;
+  z-index:5;
+  top:0;
+  left:0;
+  min-width:220px;
+  padding:13px 18px 14px;
+  background:var(--accent);
+  color:#fff;
+  border:0;
+  border-bottom:1px solid rgba(255,255,255,.2);
+  box-shadow:none;
+}
+.stage-label:after{
+  content:"";
+  position:absolute;
+  left:100%;
+  top:0;
+  width:18px;
+  height:100%;
+  background:linear-gradient(90deg,var(--accent),transparent);
+  pointer-events:none;
+}
+.stage-label span,
+.stage-label b{
+  display:block;
+  margin:0;
+  color:#fff;
+  font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+.stage-label span{
+  font-size:.58rem;
+  line-height:1.2;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  opacity:.78;
+}
+.stage-label b{
+  margin-top:4px;
+  font-size:.9rem;
+  line-height:1.2;
+  font-weight:850;
+}
+
 .stage-note{
   position:absolute;
   left:30px;
@@ -42,6 +92,13 @@
   .professional-hero-stage:before{
     right:0;
   }
+  .stage-label{
+    min-width:190px;
+    padding:11px 14px 12px;
+  }
+  .stage-label b{
+    font-size:.82rem;
+  }
   .stage-note{
     left:14px;
     right:14px;
@@ -56,6 +113,13 @@
   }
 }
 @media (max-width:700px){
+  .stage-label{
+    min-width:165px;
+    padding:10px 13px;
+  }
+  .stage-label:after{
+    width:12px;
+  }
   .stage-note{
     left:12px;
     right:12px;
