@@ -1,0 +1,79 @@
+name: Apply concept credibility corrections
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/credibility-audit.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  correct-copy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Correct illustrative claims
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          replacements = {
+              'marine/index.html': [
+                  ('Accredited servicing · Mobile support · Secure boat storage', 'Manufacturer-aware service concept · Mobile support · Boat storage'),
+                  ('Experience across Volvo Penta, Yanmar, Honda and Mercury installations.', 'A clear example of how experience across several common marine-engine systems can be presented.'),
+                  ('WORKSHOP · LINCOMBE BOATYARD', 'EXAMPLE WORKSHOP LOCATION'),
+              ],
+              'garage/index.html': [
+                  ('✓ 12-month parts and labour warranty', '✓ Warranty information explained clearly'),
+                  ('✓ Courtesy cars by arrangement', '✓ Courtesy transport information where available'),
+              ],
+              'stays/index.html': [
+                  ('<div class="eyebrow">EST. 1891</div>', '<div class="eyebrow">THE ROSELAND</div>'),
+              ],
+              'restaurant/index.html': [
+                  ("content:'OPEN KITCHEN · PLYMOUTH WATERFRONT'", "content:'OPEN KITCHEN · WATERFRONT CONCEPT'"),
+                  ('<span>Wednesday–Saturday</span>', '<span>Example service pattern</span>'),
+                  ('<span>Friday–Sunday</span>', '<span>Example service pattern</span>'),
+                  ('<span>Commercial Wharf, Plymouth</span>', '<span>Plymouth waterfront concept</span>'),
+                  ('Commercial Wharf · Plymouth · PL1', 'Plymouth waterfront · concept location'),
+                  ('TABLES RELEASED EIGHT WEEKS AHEAD', 'SAMPLE RESERVATION JOURNEY'),
+              ],
+              'builder/index.html': [
+                  ('<div><b>18</b><span>YEARS\' EXPERIENCE</span></div><div><b>74</b><span>COMPLETED PROJECTS</span></div><div><b>12</b><span>SPECIALIST TRADES</span></div><div><b>1</b><span>ACCOUNTABLE TEAM</span></div>', '<div><b>01</b><span>CLEAR PROGRAMME</span></div><div><b>02</b><span>DEFINED SCOPE</span></div><div><b>03</b><span>COORDINATED TRADES</span></div><div><b>04</b><span>ONE ACCOUNTABLE TEAM</span></div>'),
+                  ('<small>EXTENSION &amp; REMODEL</small>', '<small>ILLUSTRATIVE PROJECT · EXTENSION &amp; REMODEL</small>'),
+                  ('<small>NEW BUILD</small>', '<small>ILLUSTRATIVE PROJECT · NEW BUILD</small>'),
+                  ('<small>RENOVATION</small>', '<small>ILLUSTRATIVE PROJECT · RENOVATION</small>'),
+              ],
+              'shop/index.html': [
+                  ('Solid beech · made in Cornwall', 'Solid beech · small-batch made'),
+              ],
+          }
+
+          changed = []
+          for filename, pairs in replacements.items():
+              path = Path(filename)
+              text = path.read_text(encoding='utf-8')
+              original = text
+              for old, new in pairs:
+                  if old not in text:
+                      raise SystemExit(f'Missing expected text in {filename}: {old}')
+                  text = text.replace(old, new)
+              if text != original:
+                  path.write_text(text, encoding='utf-8')
+                  changed.append(filename)
+
+          print('Updated:', ', '.join(changed))
+          PY
+
+      - name: Commit corrections
+        run: |
+          git config user.name "Occono site maintenance"
+          git config user.email "actions@users.noreply.github.com"
+          git add marine/index.html garage/index.html stays/index.html restaurant/index.html builder/index.html shop/index.html
+          git commit -m "Remove invented trading claims from concept sites"
+          git push
