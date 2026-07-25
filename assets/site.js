@@ -9,6 +9,11 @@
   mobileStyles.href = 'assets/mobile-audit.css';
   document.head.appendChild(mobileStyles);
 
+  const previewStyles = document.createElement('link');
+  previewStyles.rel = 'stylesheet';
+  previewStyles.href = 'assets/preview-viewport-fix.css';
+  document.head.appendChild(previewStyles);
+
   const previews = document.querySelectorAll('.browser iframe, .mini-browser iframe');
   previews.forEach((preview) => {
     preview.setAttribute('scrolling', 'no');
