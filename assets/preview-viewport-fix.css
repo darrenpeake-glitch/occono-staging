@@ -3,6 +3,9 @@
 .mini-browser{
   overflow:hidden;
 }
+
+.browser iframe,
+.mini-browser iframe,
 .website-preview-frame{
   display:block;
   width:200% !important;
@@ -19,6 +22,8 @@
 
 /* Use a slightly wider virtual viewport on narrow landing-page layouts. */
 @media(max-width:700px){
+  .browser iframe,
+  .mini-browser iframe,
   .website-preview-frame{
     width:250% !important;
     height:250% !important;
