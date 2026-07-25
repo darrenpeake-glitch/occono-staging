@@ -4,6 +4,11 @@
   refinementStyles.href = 'assets/hero-refinement.css';
   document.head.appendChild(refinementStyles);
 
+  const mobileStyles = document.createElement('link');
+  mobileStyles.rel = 'stylesheet';
+  mobileStyles.href = 'assets/mobile-audit.css';
+  document.head.appendChild(mobileStyles);
+
   const previews = document.querySelectorAll('.browser iframe, .mini-browser iframe');
   previews.forEach((preview) => {
     preview.setAttribute('scrolling', 'no');
