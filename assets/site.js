@@ -14,6 +14,15 @@
   previewStyles.href = 'assets/preview-viewport-fix.css';
   document.head.appendChild(previewStyles);
 
+  const header = document.querySelector('.site-header');
+  if (header) {
+    const updateHeaderState = () => {
+      header.classList.toggle('is-scrolled', window.scrollY > 12);
+    };
+    updateHeaderState();
+    window.addEventListener('scroll', updateHeaderState, { passive: true });
+  }
+
   const previews = document.querySelectorAll('.browser iframe, .mini-browser iframe');
   previews.forEach((preview) => {
     preview.setAttribute('scrolling', 'no');
