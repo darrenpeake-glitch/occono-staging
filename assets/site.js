@@ -45,10 +45,14 @@
     deliveryNote.textContent = 'Your details are sent directly and securely to Occono.';
   }
 
-  const setStatus = (message, state) => {
+  const setStatus = (message, state, allowHtml = false) => {
     if (!status) return;
     status.hidden = false;
-    status.textContent = message;
+    if (allowHtml) {
+      status.innerHTML = message;
+    } else {
+      status.textContent = message;
+    }
     status.dataset.state = state;
   };
 
@@ -97,8 +101,9 @@
     } catch (error) {
       console.error('Occono contact form submission failed:', error);
       setStatus(
-        'Sorry, your enquiry could not be sent. Please email hello@occono.co.uk.',
-        'error'
+        'Sorry, your enquiry could not be sent. Please email <a href="mailto:hello@occono.co.uk">hello@occono.co.uk</a>.',
+        'error',
+        true
       );
     } finally {
       if (submitButton) {
