@@ -32,7 +32,7 @@
     preview.style.overflow = 'hidden';
   });
 
-  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxHHO_pKu_KR587oLPwtEtRijWN6SXzAFSZE-CIgJyxTx8Edqd-zj6tNchmPkKLiRMB/exec';
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxSqjTY9Q0gQyHVs_Ca1Q3BEjpaQObwCHaYvn0HEZc5HwijRbiJGkT8-OtW5iMb61M_/exec';
   const form = document.getElementById('project-form');
   if (!form) return;
 
