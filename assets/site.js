@@ -32,25 +32,74 @@
     preview.style.overflow = 'hidden';
   });
 
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxHHO_pKu_KR587oLPwtEtRijWN6SXzAFSZE-CIgJyxTx8Edqd-zj6tNchmPkKLiRMB/exec';
   const form = document.getElementById('project-form');
   if (!form) return;
+
   const status = form.querySelector('.form-status');
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
-    if (!form.checkValidity()) { form.reportValidity(); return; }
-    const data = new FormData(form);
-    const subject = `Website enquiry — ${data.get('business') || data.get('name')}`;
-    const body = [
-      `Name: ${data.get('name')}`,
-      `Business: ${data.get('business') || 'Not supplied'}`,
-      `Reply email: ${data.get('email')}`,
-      `Website needed: ${data.get('type')}`,
-      `Guide budget: ${data.get('budget')}`,
-      '',
-      data.get('message')
-    ].join('\n');
+  const submitButton = form.querySelector('button[type="submit"]');
+  const defaultButtonText = submitButton ? submitButton.textContent : '';
+
+  const setStatus = (message, state) => {
+    if (!status) return;
     status.hidden = false;
-    status.textContent = 'Your email app is opening with the project outline ready to send.';
-    window.location.href = `mailto:hello@occono.co.uk?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    status.textContent = message;
+    status.dataset.state = state;
+  };
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    const data = new FormData(form);
+    const payload = {
+      name: data.get('name') || '',
+      business: data.get('business') || '',
+      email: data.get('email') || '',
+      websiteType: data.get('type') || '',
+      guideBudget: data.get('budget') || '',
+      message: data.get('message') || '',
+      source: 'Occono website',
+      website: data.get('website') || ''
+    };
+
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = 'Sending…';
+    }
+    setStatus('Sending your website outline…', 'pending');
+
+    try {
+      const response = await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'text/plain;charset=utf-8'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const result = await response.json();
+      if (!result.ok) {
+        throw new Error(result.message || 'Your enquiry could not be submitted.');
+      }
+
+      form.reset();
+      setStatus('Thank you. Your website outline has been sent and we will reply personally.', 'success');
+    } catch (error) {
+      console.error('Occono contact form submission failed:', error);
+      setStatus(
+        'Sorry, your enquiry could not be sent. Please email hello@occono.co.uk.',
+        'error'
+      );
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = defaultButtonText;
+      }
+    }
   });
 })();
