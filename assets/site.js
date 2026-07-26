@@ -38,7 +38,12 @@
 
   const status = form.querySelector('.form-status');
   const submitButton = form.querySelector('button[type="submit"]');
+  const deliveryNote = form.querySelector('.submit-row small');
   const defaultButtonText = submitButton ? submitButton.textContent : '';
+
+  if (deliveryNote) {
+    deliveryNote.textContent = 'Your details are sent directly and securely to Occono.';
+  }
 
   const setStatus = (message, state) => {
     if (!status) return;
