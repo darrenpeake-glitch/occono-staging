@@ -1,0 +1,73 @@
+name: Production polish
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  polish:
+    if: ${{ !contains(github.event.head_commit.message, '[production-polish]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Apply production corrections
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          concept_dirs = ['marine', 'garage', 'stays', 'restaurant', 'builder', 'shop']
+          old_base = 'https://darrenpeake-glitch.github.io/occono-staging'
+          new_base = 'https://www.occono.co.uk'
+
+          for directory in concept_dirs:
+              path = Path(directory) / 'index.html'
+              text = path.read_text(encoding='utf-8')
+              text = text.replace(old_base, new_base)
+              path.write_text(text, encoding='utf-8')
+
+          index = Path('index.html')
+          text = index.read_text(encoding='utf-8')
+          if 'application/ld+json' not in text:
+              schema = '''<script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Occono","url":"https://www.occono.co.uk/","email":"hello@occono.co.uk","founder":{"@type":"Person","name":"Darren Peake"},"areaServed":[{"@type":"AdministrativeArea","name":"Devon"},{"@type":"AdministrativeArea","name":"Cornwall"},{"@type":"Country","name":"United Kingdom"}],"description":"Occono plans, writes, designs and builds professional websites for small businesses."}</script>'''
+              text = text.replace('</head>', schema + '</head>', 1)
+          if 'property="og:site_name"' not in text:
+              text = text.replace('<meta content="website" property="og:type"/>', '<meta content="website" property="og:type"/><meta content="Occono" property="og:site_name"/>', 1)
+          index.write_text(text, encoding='utf-8')
+
+          js = Path('assets/site.js')
+          text = js.read_text(encoding='utf-8')
+          text = text.replace(
+              "const setStatus = (message, state) => {\n    if (!status) return;\n    status.hidden = false;\n    status.textContent = message;\n    status.dataset.state = state;\n  };",
+              "const setStatus = (message, state, allowHtml = false) => {\n    if (!status) return;\n    status.hidden = false;\n    if (allowHtml) {\n      status.innerHTML = message;\n    } else {\n      status.textContent = message;\n    }\n    status.dataset.state = state;\n  };"
+          )
+          text = text.replace(
+              "setStatus(\n        'Sorry, your enquiry could not be sent. Please email hello@occono.co.uk.',\n        'error'\n      );",
+              "setStatus(\n        'Sorry, your enquiry could not be sent. Please email <a href=\"mailto:hello@occono.co.uk\">hello@occono.co.uk</a>.',\n        'error',\n        true\n      );"
+          )
+          js.write_text(text, encoding='utf-8')
+
+          readme = Path('README.md')
+          readme.write_text('''# Occono website\n\nProduction website for [Occono](https://www.occono.co.uk/), an independent web studio serving small businesses in Devon, Cornwall and across the UK.\n\n## Production\n\n- Live domain: `https://www.occono.co.uk/`\n- Hosting: GitHub Pages\n- Default branch: `main`\n- Contact-form backend: Google Apps Script\n- Enquiry delivery: Google Sheets and Google Workspace Gmail\n\n## Structure\n\n- `index.html` — main studio website\n- `assets/` — shared styles, scripts and brand assets\n- `case-studies/` — portfolio case studies\n- `marine/`, `garage/`, `stays/`, `restaurant/`, `builder/`, `shop/` — noindexed concept websites\n- `privacy.html`, `cookies.html`, `accessibility.html`, `website-terms.html` — public information pages\n- `sitemap.xml`, `robots.txt`, `CNAME` — search and domain configuration\n\n## Deployment\n\nChanges pushed to `main` are published by GitHub Pages. Keep the `CNAME` file set to `www.occono.co.uk`.\n\n## Contact form\n\nThe public form submits JSON to the deployed Google Apps Script endpoint in `assets/site.js`. The endpoint URL is public by design; validation, spam filtering and delivery controls belong in the Apps Script backend.\n\n## Portfolio disclosure\n\nConcept websites are clearly labelled and excluded from search indexing. They demonstrate design and development capability and are not represented as commissioned client work.\n''', encoding='utf-8')
+
+          not_found = Path('404.html')
+          if not not_found.exists():
+              not_found.write_text('''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><meta name="theme-color" content="#f2efe7"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/base.css"><title>Page not found — Occono</title></head><body><main class="legal-page"><article class="wrap legal-shell"><div class="eyebrow">404 · Page not found</div><h1>That page is not here.</h1><p>The address may have changed, or the link may be incomplete.</p><p><a class="button" href="/">Return to Occono</a></p></article></main></body></html>''', encoding='utf-8')
+          PY
+
+      - name: Commit corrections
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html assets/site.js README.md 404.html marine/index.html garage/index.html stays/index.html restaurant/index.html builder/index.html shop/index.html
+          if git diff --cached --quiet; then
+            echo "No changes required"
+          else
+            git commit -m "Production metadata, SEO and repository polish [production-polish]"
+            git push
+          fi
