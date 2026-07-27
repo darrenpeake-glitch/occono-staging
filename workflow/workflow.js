@@ -1,0 +1,63 @@
+const WORKFLOWS={enquiries:{label:'Enquiries & proposals',stages:['New','Under review','Awaiting Occono','Proposal preparation','Proposal sent','Waiting on customer','Accepted','Closed']},outreach:{label:'Outreach',stages:['Prospect found','Qualified','Outreach ready','Contacted','Follow-up','Engaged','Converted']},delivery:{label:'Build & delivery',stages:['Ready to start','In progress','Waiting','Review','Ready to launch','Complete']}};
+
+// Development identity. Production identity will be supplied by Cloudflare Access headers.
+const session={userId:'usr-darren',name:'Darren',email:'darren@occono.co.uk',role:'owner'};
+
+const demoRecords=[
+{id:'ENQ-2026-0001',workflow:'enquiries',title:'Occono Test Business',contact:'Test Contact',status:'New',ownerId:'usr-darren',ownerName:'Darren',nextAction:'Review test record',due:'2026-07-27T09:00:00+01:00',summary:'Build a small service website.'},
+{id:'ENQ-2026-0002',workflow:'enquiries',title:'No Business Test',contact:'No Business Test',status:'Under review',ownerId:'usr-darren',ownerName:'Darren',nextAction:'Confirm business details',due:'2026-07-28T09:00:00+01:00',summary:'Enquiry without a business record.'},
+{id:'ENQ-2026-0004',workflow:'enquiries',title:'Occono Deployed Test',contact:'Deployed HTTP Test',status:'Awaiting Occono',ownerId:'usr-darren',ownerName:'Darren',nextAction:'Review and reply to prospect',due:'2026-07-27T09:00:00+01:00',summary:'Validate the deployed HTTP endpoint.'},
+{id:'OUT-2026-0001',workflow:'outreach',title:'Devon Independent Café',contact:'Owner unknown',status:'Qualified',ownerId:'usr-darren',ownerName:'Darren',nextAction:'Prepare first-touch email',due:'2026-07-30T10:00:00+01:00',summary:'Local café with an outdated mobile website.'},
+{id:'PRJ-2026-0001',workflow:'delivery',title:'Occono Live Pilot',contact:'Internal',status:'Review',ownerId:'usr-darren',ownerName:'Darren',nextAction:'Complete final workflow review',due:'2026-07-29T12:00:00+01:00',summary:'Controlled build and delivery pilot.'}
+];
+
+const state={records:[],workflow:'all',owner:'all'};
+const board=document.querySelector('#board');
+const workflowFilter=document.querySelector('#workflowFilter');
+const ownerFilter=document.querySelector('#ownerFilter');
+const ownerFilterWrap=document.querySelector('#ownerFilterWrap');
+
+async function loadRecords(){
+  // Replace with authenticated GET /api/workflows. The server must enforce role filtering.
+  const source=demoRecords;
+  state.records=session.role==='owner'?source:source.filter(r=>r.ownerId===session.userId);
+}
+
+function initialiseFilters(){
+  workflowFilter.innerHTML=`<option value="all">All workflows</option>${Object.entries(WORKFLOWS).map(([id,w])=>`<option value="${id}">${w.label}</option>`).join('')}`;
+  const owners=[...new Set(state.records.map(r=>r.ownerName))].sort();
+  ownerFilter.innerHTML=`<option value="all">Everyone</option>${owners.map(o=>`<option value="${o}">${o}</option>`).join('')}`;
+  ownerFilterWrap.hidden=session.role!=='owner';
+  workflowFilter.addEventListener('change',e=>{state.workflow=e.target.value;render()});
+  ownerFilter.addEventListener('change',e=>{state.owner=e.target.value;render()});
+}
+
+function filtered(){return state.records.filter(r=>(state.workflow==='all'||r.workflow===state.workflow)&&(state.owner==='all'||r.ownerName===state.owner));}
+function stagesForView(records){if(state.workflow!=='all')return WORKFLOWS[state.workflow].stages;return [...new Set(records.map(r=>r.status))];}
+function isOverdue(value){return value&&new Date(value)<new Date()}
+function formatDue(value){if(!value)return 'No due date';return new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}).format(new Date(value));}
+function esc(value=''){return String(value).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
+
+function renderMetrics(records){const overdue=records.filter(r=>isOverdue(r.due)).length;const waiting=records.filter(r=>/waiting|awaiting/i.test(r.status)).length;const unassigned=records.filter(r=>!r.ownerId).length;document.querySelector('#metrics').innerHTML=[['Active',records.length],['Overdue',overdue],['Waiting',waiting],['Unassigned',unassigned]].map(([label,value])=>`<article class="metric"><strong>${value}</strong><span>${label}</span></article>`).join('');}
+
+function render(){
+ const records=filtered();renderMetrics(records);
+ document.querySelector('#userBadge').textContent=`${session.name} · ${session.role}`;
+ document.querySelector('#pageTitle').textContent=session.role==='owner'?'All current work':'My assigned work';
+ board.innerHTML=stagesForView(records).map(stage=>{const cards=records.filter(r=>r.status===stage);return `<section class="column" data-stage="${esc(stage)}"><header class="column-header"><h2>${esc(stage)}</h2><span class="count">${cards.length}</span></header><div class="card-list">${cards.length?cards.map(cardTemplate).join(''):'<div class="empty">No work here</div>'}</div></section>`}).join('');
+ attachBoardEvents();
+}
+
+function cardTemplate(r){return `<article class="work-card" draggable="${session.role==='owner'}" data-id="${esc(r.id)}"><span class="card-id">${esc(r.id)} · ${esc(WORKFLOWS[r.workflow].label)}</span><h3>${esc(r.title)}</h3><div class="card-meta">${esc(r.contact)}</div><div class="card-footer"><span>${esc(r.ownerName||'Unassigned')}</span><span class="${isOverdue(r.due)?'overdue':''}">${esc(formatDue(r.due))}</span></div></article>`;}
+
+function attachBoardEvents(){
+ document.querySelectorAll('.work-card').forEach(card=>{card.addEventListener('click',()=>openCard(card.dataset.id));card.addEventListener('dragstart',e=>e.dataTransfer.setData('text/plain',card.dataset.id));});
+ if(session.role!=='owner')return;
+ document.querySelectorAll('.column').forEach(column=>{column.addEventListener('dragover',e=>{e.preventDefault();column.classList.add('drop-target')});column.addEventListener('dragleave',()=>column.classList.remove('drop-target'));column.addEventListener('drop',async e=>{e.preventDefault();column.classList.remove('drop-target');await moveCard(e.dataTransfer.getData('text/plain'),column.dataset.stage)});});
+}
+
+async function moveCard(id,status){const record=state.records.find(r=>r.id===id);if(!record||record.status===status)return;record.status=status;render();/* Production: PATCH /api/workflows/:id after server-side authorisation and audit logging. */}
+function openCard(id){const r=state.records.find(x=>x.id===id);document.querySelector('#cardDetails').innerHTML=`<p class="eyebrow">${esc(r.workflow)}</p><h2>${esc(r.title)}</h2><p>${esc(r.summary)}</p><dl class="detail-grid"><dt>Reference</dt><dd>${esc(r.id)}</dd><dt>Status</dt><dd>${esc(r.status)}</dd><dt>Assigned to</dt><dd>${esc(r.ownerName||'Unassigned')}</dd><dt>Next action</dt><dd>${esc(r.nextAction||'Not set')}</dd><dt>Due</dt><dd>${esc(formatDue(r.due))}</dd></dl>`;document.querySelector('#cardDialog').showModal();}
+
+document.querySelector('#logoutButton').addEventListener('click',()=>location.assign('/'));
+await loadRecords();initialiseFilters();render();
