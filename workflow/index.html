@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Occono Workflow</title>
+  <link rel="stylesheet" href="./workflow.css">
+</head>
+<body>
+  <header class="app-header">
+    <a class="brand" href="/" aria-label="Occono home">OCCONO</a>
+    <div class="header-actions">
+      <span id="userBadge" class="user-badge"></span>
+      <button id="logoutButton" class="button button-secondary" type="button">Sign out</button>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <section class="page-heading">
+      <div>
+        <p class="eyebrow">Staff workflow</p>
+        <h1 id="pageTitle">All current work</h1>
+        <p id="pageSummary">Live operational view across Occono workflows.</p>
+      </div>
+      <div class="view-actions">
+        <label>
+          <span>Workflow</span>
+          <select id="workflowFilter"></select>
+        </label>
+        <label id="ownerFilterWrap">
+          <span>Assigned to</span>
+          <select id="ownerFilter"></select>
+        </label>
+      </div>
+    </section>
+
+    <section id="metrics" class="metrics" aria-label="Workflow summary"></section>
+    <section id="board" class="board" aria-label="Kanban board"></section>
+  </main>
+
+  <dialog id="cardDialog" class="card-dialog">
+    <form method="dialog">
+      <button class="dialog-close" aria-label="Close">×</button>
+      <div id="cardDetails"></div>
+    </form>
+  </dialog>
+
+  <script type="module" src="./workflow.js"></script>
+</body>
+</html>
