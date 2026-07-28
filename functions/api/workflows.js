@@ -1,6 +1,6 @@
 const OWNER_EMAILS = new Set(['darren@occono.co.uk']);
 
-const RECORDS = [
+const FALLBACK_RECORDS = [
   { id:'ENQ-2026-0001', workflow:'enquiries', title:'Occono Test Business', contact:'Test Contact', status:'New', ownerId:'email:darren@occono.co.uk', ownerEmail:'darren@occono.co.uk', ownerName:'Darren', nextAction:'Review test record', due:'2026-07-27T09:00:00+01:00', summary:'Build a small service website.' },
   { id:'ENQ-2026-0002', workflow:'enquiries', title:'No Business Test', contact:'No Business Test', status:'Under review', ownerId:'email:darren@occono.co.uk', ownerEmail:'darren@occono.co.uk', ownerName:'Darren', nextAction:'Confirm business details', due:'2026-07-28T09:00:00+01:00', summary:'Enquiry without a business record.' },
   { id:'ENQ-2026-0004', workflow:'enquiries', title:'Occono Deployed Test', contact:'Deployed HTTP Test', status:'Awaiting Occono', ownerId:'email:darren@occono.co.uk', ownerEmail:'darren@occono.co.uk', ownerName:'Darren', nextAction:'Review and reply to prospect', due:'2026-07-27T09:00:00+01:00', summary:'Validate the deployed HTTP endpoint.' },
@@ -19,6 +19,26 @@ function getIdentity(request) {
   };
 }
 
+async function fetchTestRecords(env) {
+  if (!env.KANBAN_API_URL || !env.KANBAN_API_TOKEN) {
+    return { records: FALLBACK_RECORDS, source: 'protected-demo', warning: 'TEST API not configured.' };
+  }
+
+  const response = await fetch(env.KANBAN_API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({ action: 'listWorkflows', token: env.KANBAN_API_TOKEN }),
+  });
+
+  if (!response.ok) throw new Error(`TEST API returned HTTP ${response.status}.`);
+  const payload = await response.json();
+  if (!payload.ok || !Array.isArray(payload.records)) {
+    throw new Error(payload.error || 'TEST API returned an invalid payload.');
+  }
+
+  return { records: payload.records, source: payload.source || 'test-workbook' };
+}
+
 export async function onRequestGet(context) {
   const identity = getIdentity(context.request);
   if (!identity) {
@@ -28,12 +48,20 @@ export async function onRequestGet(context) {
     );
   }
 
+  let result;
+  try {
+    result = await fetchTestRecords(context.env);
+  } catch (error) {
+    console.error('TEST workflow API failure', error);
+    result = { records: FALLBACK_RECORDS, source: 'protected-demo', warning: error.message };
+  }
+
   const visibleRecords = identity.role === 'owner'
-    ? RECORDS
-    : RECORDS.filter(record => record.ownerEmail === identity.email);
+    ? result.records
+    : result.records.filter(record => record.ownerEmail === identity.email);
 
   return Response.json(
-    { records: visibleRecords, source: 'protected-demo' },
+    { records: visibleRecords, source: result.source, warning: result.warning || null },
     { headers: { 'Cache-Control': 'no-store' } },
   );
 }
