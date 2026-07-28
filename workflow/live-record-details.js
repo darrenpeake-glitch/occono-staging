@@ -1,6 +1,7 @@
 const DETAIL_ESCAPE=value=>String(value??'').replace(/[&<>'"]/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char]));
 const detailDate=value=>{if(!value)return'No date recorded';const date=new Date(value);if(Number.isNaN(date.getTime()))return String(value);return new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}).format(date);};
-const detailId=details=>details.textContent.match(/(?:ENQ|OUT|PRJ)-\d{4}-\d{4}|OUT-TEST-\d{4}/)?.[0]||'';
+let activeRecordId='';
+const detailId=details=>activeRecordId||details.dataset.recordId||details.textContent.match(/(?:ENQ|OUT|PRJ)-\d{4}-\d{4}|OUT-TEST-\d{4}/)?.[0]||'';
 const detailWorkflow=id=>id.startsWith('ENQ-')?'enquiries':id.startsWith('OUT-')?'outreach':'delivery';
 
 async function fetchDetails(id,workflow){const response=await fetch(`/api/workflows?id=${encodeURIComponent(id)}&workflow=${encodeURIComponent(workflow)}`,{credentials:'same-origin',headers:{Accept:'application/json'}});const payload=await response.json().catch(()=>({}));if(!response.ok)throw new Error(payload.error||'Record details could not be loaded.');return payload.details;}
@@ -18,6 +19,14 @@ function renderDocuments(panel,documents=[]){if(!documents.length){panel.innerHT
 
 function renderTimeline(panel,events=[]){if(!events.length){panel.innerHTML='<section class="crm-panel"><p class="panel-note">No timeline events are recorded for this item.</p></section>';return;}panel.innerHTML=`<section class="crm-panel"><ol class="timeline">${events.map(event=>`<li><span class="timeline-marker"></span><div><strong>${DETAIL_ESCAPE(event.title||'Event')}</strong><p>${DETAIL_ESCAPE(event.detail||event.outcome||'')}</p><small>${DETAIL_ESCAPE(event.actor||'System')} · ${DETAIL_ESCAPE(event.timestamp?detailDate(event.timestamp):(event.outcome||'Current'))}</small>${event.url?`<p><a href="${DETAIL_ESCAPE(event.url)}" target="_blank" rel="noopener">Open evidence</a></p>`:''}</div></li>`).join('')}</ol></section>`;}
 
-async function loadLivePanel(button){const details=document.querySelector('#cardDetails');if(!details)return;const panel=details.querySelector(`[data-panel="${button.dataset.tab}"]`);if(!panel||panel.dataset.liveLoaded==='true'||!['customer','forms','timeline'].includes(button.dataset.tab))return;const id=detailId(details);if(!id)return;panel.innerHTML='<section class="crm-panel"><p class="panel-note">Loading live record data…</p></section>';try{const data=await fetchDetails(id,detailWorkflow(id));if(button.dataset.tab==='customer')renderCustomer(panel,data.customer);if(button.dataset.tab==='forms')renderDocuments(panel,data.documents);if(button.dataset.tab==='timeline')renderTimeline(panel,data.timeline);panel.dataset.liveLoaded='true';}catch(error){console.error(error);panel.innerHTML=`<section class="crm-panel"><p class="panel-note">${DETAIL_ESCAPE(error.message)}</p></section>`;}}
+async function loadLivePanel(button){const details=document.querySelector('#cardDetails');if(!details)return;const panel=details.querySelector(`[data-panel="${button.dataset.tab}"]`);if(!panel||panel.dataset.liveLoaded==='true'||!['customer','forms','timeline'].includes(button.dataset.tab))return;const id=detailId(details);if(!id){panel.innerHTML='<section class="crm-panel"><p class="panel-note">Record reference could not be identified.</p></section>';return;}panel.innerHTML='<section class="crm-panel"><p class="panel-note">Loading live record data…</p></section>';try{const data=await fetchDetails(id,detailWorkflow(id));if(button.dataset.tab==='customer')renderCustomer(panel,data.customer);if(button.dataset.tab==='forms')renderDocuments(panel,data.documents);if(button.dataset.tab==='timeline')renderTimeline(panel,data.timeline);panel.dataset.liveLoaded='true';}catch(error){console.error(error);panel.innerHTML=`<section class="crm-panel"><p class="panel-note">${DETAIL_ESCAPE(error.message)}</p></section>`;}}
 
-document.addEventListener('click',event=>{const button=event.target.closest('.record-tab');if(button)loadLivePanel(button);});
+document.addEventListener('click',event=>{
+  const card=event.target.closest('.work-card');
+  if(card){
+    activeRecordId=String(card.dataset.id||'');
+    document.querySelector('#cardDetails')?.removeAttribute('data-record-id');
+  }
+  const button=event.target.closest('.record-tab');
+  if(button)loadLivePanel(button);
+});
