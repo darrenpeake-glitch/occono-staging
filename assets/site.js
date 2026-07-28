@@ -32,6 +32,17 @@
     preview.style.overflow = 'hidden';
   });
 
+  const footerLinks = document.querySelector('.foot-links');
+  if (footerLinks && !footerLinks.querySelector('[data-staff-login]')) {
+    const staffLogin = document.createElement('a');
+    staffLogin.href = 'https://workflow.occono.co.uk/workflow/';
+    staffLogin.textContent = 'Staff login';
+    staffLogin.setAttribute('aria-label', 'Open the protected Occono staff workflow');
+    staffLogin.setAttribute('rel', 'nofollow');
+    staffLogin.dataset.staffLogin = 'true';
+    footerLinks.appendChild(staffLogin);
+  }
+
   const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxSqjTY9Q0gQyHVs_Ca1Q3BEjpaQObwCHaYvn0HEZc5HwijRbiJGkT8-OtW5iMb61M_/exec';
   const form = document.getElementById('project-form');
   if (!form) return;
