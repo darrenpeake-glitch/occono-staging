@@ -1,32 +1,33 @@
 const WORKFLOWS={enquiries:{label:'Enquiries & proposals',stages:['New','Under review','Awaiting Occono','Proposal preparation','Proposal sent','Waiting on customer','Accepted','Closed']},outreach:{label:'Outreach',stages:['Prospect found','Qualified','Outreach ready','Contacted','Follow-up','Engaged','Converted']},delivery:{label:'Build & delivery',stages:['Ready to start','In progress','Waiting','Review','Ready to launch','Complete']}};
 
-// Development identity. Production identity will be supplied by Cloudflare Access headers.
-const session={userId:'usr-darren',name:'Darren',email:'darren@occono.co.uk',role:'owner'};
-
-const demoRecords=[
-{id:'ENQ-2026-0001',workflow:'enquiries',title:'Occono Test Business',contact:'Test Contact',status:'New',ownerId:'usr-darren',ownerName:'Darren',nextAction:'Review test record',due:'2026-07-27T09:00:00+01:00',summary:'Build a small service website.'},
-{id:'ENQ-2026-0002',workflow:'enquiries',title:'No Business Test',contact:'No Business Test',status:'Under review',ownerId:'usr-darren',ownerName:'Darren',nextAction:'Confirm business details',due:'2026-07-28T09:00:00+01:00',summary:'Enquiry without a business record.'},
-{id:'ENQ-2026-0004',workflow:'enquiries',title:'Occono Deployed Test',contact:'Deployed HTTP Test',status:'Awaiting Occono',ownerId:'usr-darren',ownerName:'Darren',nextAction:'Review and reply to prospect',due:'2026-07-27T09:00:00+01:00',summary:'Validate the deployed HTTP endpoint.'},
-{id:'OUT-2026-0001',workflow:'outreach',title:'Devon Independent Café',contact:'Owner unknown',status:'Qualified',ownerId:'usr-darren',ownerName:'Darren',nextAction:'Prepare first-touch email',due:'2026-07-30T10:00:00+01:00',summary:'Local café with an outdated mobile website.'},
-{id:'PRJ-2026-0001',workflow:'delivery',title:'Occono Live Pilot',contact:'Internal',status:'Review',ownerId:'usr-darren',ownerName:'Darren',nextAction:'Complete final workflow review',due:'2026-07-29T12:00:00+01:00',summary:'Controlled build and delivery pilot.'}
-];
-
+let session=null;
 const state={records:[],workflow:'all',owner:'all'};
 const board=document.querySelector('#board');
 const workflowFilter=document.querySelector('#workflowFilter');
 const ownerFilter=document.querySelector('#ownerFilter');
 const ownerFilterWrap=document.querySelector('#ownerFilterWrap');
 
-async function loadRecords(){
-  // Replace with authenticated GET /api/workflows. The server must enforce role filtering.
-  const source=demoRecords;
-  state.records=session.role==='owner'?source:source.filter(r=>r.ownerId===session.userId);
+async function getJson(url){
+  const response=await fetch(url,{credentials:'same-origin',headers:{Accept:'application/json'}});
+  if(response.status===401){location.assign('/cdn-cgi/access/login');throw new Error('Authentication required');}
+  if(!response.ok)throw new Error(`Request failed (${response.status})`);
+  return response.json();
+}
+
+async function loadData(){
+  try{
+    [session,{records:state.records}]=await Promise.all([getJson('/api/session'),getJson('/api/workflows')]);
+  }catch(error){
+    console.error(error);
+    board.innerHTML='<section class="load-error"><h2>Workflow unavailable</h2><p>The protected workflow data could not be loaded. Refresh the page or sign in again.</p></section>';
+    throw error;
+  }
 }
 
 function initialiseFilters(){
   workflowFilter.innerHTML=`<option value="all">All workflows</option>${Object.entries(WORKFLOWS).map(([id,w])=>`<option value="${id}">${w.label}</option>`).join('')}`;
-  const owners=[...new Set(state.records.map(r=>r.ownerName))].sort();
-  ownerFilter.innerHTML=`<option value="all">Everyone</option>${owners.map(o=>`<option value="${o}">${o}</option>`).join('')}`;
+  const owners=[...new Set(state.records.map(r=>r.ownerName).filter(Boolean))].sort();
+  ownerFilter.innerHTML=`<option value="all">Everyone</option>${owners.map(o=>`<option value="${esc(o)}">${esc(o)}</option>`).join('')}`;
   ownerFilterWrap.hidden=session.role!=='owner';
   workflowFilter.addEventListener('change',e=>{state.workflow=e.target.value;render()});
   ownerFilter.addEventListener('change',e=>{state.owner=e.target.value;render()});
@@ -44,6 +45,7 @@ function render(){
  const records=filtered();renderMetrics(records);
  document.querySelector('#userBadge').textContent=`${session.name} · ${session.role}`;
  document.querySelector('#pageTitle').textContent=session.role==='owner'?'All current work':'My assigned work';
+ document.querySelector('#pageSummary').textContent=session.role==='owner'?'Live operational view across Occono workflows.':'Only work assigned to your account is shown.';
  board.innerHTML=stagesForView(records).map(stage=>{const cards=records.filter(r=>r.status===stage);return `<section class="column" data-stage="${esc(stage)}"><header class="column-header"><h2>${esc(stage)}</h2><span class="count">${cards.length}</span></header><div class="card-list">${cards.length?cards.map(cardTemplate).join(''):'<div class="empty">No work here</div>'}</div></section>`}).join('');
  attachBoardEvents();
 }
@@ -56,8 +58,8 @@ function attachBoardEvents(){
  document.querySelectorAll('.column').forEach(column=>{column.addEventListener('dragover',e=>{e.preventDefault();column.classList.add('drop-target')});column.addEventListener('dragleave',()=>column.classList.remove('drop-target'));column.addEventListener('drop',async e=>{e.preventDefault();column.classList.remove('drop-target');await moveCard(e.dataTransfer.getData('text/plain'),column.dataset.stage)});});
 }
 
-async function moveCard(id,status){const record=state.records.find(r=>r.id===id);if(!record||record.status===status)return;record.status=status;render();/* Production: PATCH /api/workflows/:id after server-side authorisation and audit logging. */}
-function openCard(id){const r=state.records.find(x=>x.id===id);document.querySelector('#cardDetails').innerHTML=`<p class="eyebrow">${esc(r.workflow)}</p><h2>${esc(r.title)}</h2><p>${esc(r.summary)}</p><dl class="detail-grid"><dt>Reference</dt><dd>${esc(r.id)}</dd><dt>Status</dt><dd>${esc(r.status)}</dd><dt>Assigned to</dt><dd>${esc(r.ownerName||'Unassigned')}</dd><dt>Next action</dt><dd>${esc(r.nextAction||'Not set')}</dd><dt>Due</dt><dd>${esc(formatDue(r.due))}</dd></dl>`;document.querySelector('#cardDialog').showModal();}
+async function moveCard(id,status){const record=state.records.find(r=>r.id===id);if(!record||record.status===status)return;record.status=status;render();/* TEST mode: write API deliberately disabled until audit logging is connected. */}
+function openCard(id){const r=state.records.find(x=>x.id===id);document.querySelector('#cardDetails').innerHTML=`<p class="eyebrow">${esc(WORKFLOWS[r.workflow].label)}</p><h2>${esc(r.title)}</h2><p>${esc(r.summary)}</p><dl class="detail-grid"><dt>Reference</dt><dd>${esc(r.id)}</dd><dt>Status</dt><dd>${esc(r.status)}</dd><dt>Assigned to</dt><dd>${esc(r.ownerName||'Unassigned')}</dd><dt>Next action</dt><dd>${esc(r.nextAction||'Not set')}</dd><dt>Due</dt><dd>${esc(formatDue(r.due))}</dd></dl>`;document.querySelector('#cardDialog').showModal();}
 
-document.querySelector('#logoutButton').addEventListener('click',()=>location.assign('/'));
-await loadRecords();initialiseFilters();render();
+document.querySelector('#logoutButton').addEventListener('click',()=>location.assign('/cdn-cgi/access/logout'));
+await loadData();initialiseFilters();render();
