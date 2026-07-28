@@ -19,6 +19,28 @@ function getIdentity(request) {
   };
 }
 
+function normaliseDate(value) {
+  if (!value) return '';
+  const raw = String(value).trim();
+  const uk = raw.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})(?:\s+(\d{1,2}):(\d{2}))?$/);
+  if (uk) {
+    const [, day, month, year, hour = '00', minute = '00'] = uk;
+    return `${year}-${month.padStart(2,'0')}-${day.padStart(2,'0')}T${hour.padStart(2,'0')}:${minute}:00+01:00`;
+  }
+  const parsed = new Date(raw);
+  return Number.isNaN(parsed.getTime()) ? '' : parsed.toISOString();
+}
+
+function normaliseRecord(record) {
+  return {
+    ...record,
+    workflow: record.workflow || 'enquiries',
+    ownerEmail: String(record.ownerEmail || '').trim().toLowerCase(),
+    ownerId: record.ownerId || (record.ownerEmail ? `email:${String(record.ownerEmail).trim().toLowerCase()}` : ''),
+    due: normaliseDate(record.due),
+  };
+}
+
 async function fetchTestRecords(env) {
   if (!env.KANBAN_API_URL || !env.KANBAN_API_TOKEN) {
     return { records: FALLBACK_RECORDS, source: 'protected-demo', warning: 'TEST API not configured.' };
@@ -36,7 +58,10 @@ async function fetchTestRecords(env) {
     throw new Error(payload.error || 'TEST API returned an invalid payload.');
   }
 
-  return { records: payload.records, source: payload.source || 'test-workbook' };
+  return {
+    records: payload.records.map(normaliseRecord),
+    source: payload.source || 'test-workbook',
+  };
 }
 
 export async function onRequestGet(context) {
