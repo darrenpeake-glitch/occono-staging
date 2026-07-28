@@ -40,10 +40,10 @@
   </main>
 
   <dialog id="cardDialog" class="card-dialog">
-    <form method="dialog">
-      <button class="dialog-close" aria-label="Close">×</button>
+    <div class="dialog-shell">
+      <button id="dialogCloseButton" class="dialog-close" type="button" aria-label="Close">×</button>
       <div id="cardDetails"></div>
-    </form>
+    </div>
   </dialog>
 
   <script type="module" src="./workflow.js"></script>
