@@ -1,7 +1,7 @@
 const WORKFLOWS={enquiries:{label:'Enquiries & proposals',stages:['New','Under review','Awaiting Occono','Proposal preparation','Proposal sent','Waiting on customer','Accepted','Closed']},outreach:{label:'Outreach',stages:['Prospect found','Qualified','Outreach ready','Contacted','Follow-up','Engaged','Converted']},delivery:{label:'Build & delivery',stages:['Ready to start','In progress','Waiting','Review','Ready to launch','Complete']}};
 
 let session=null;
-const state={records:[],workflow:'all',owner:'all'};
+const state={records:[],workflow:'all',owner:'all',source:'unknown',warning:null};
 const board=document.querySelector('#board');
 const workflowFilter=document.querySelector('#workflowFilter');
 const ownerFilter=document.querySelector('#ownerFilter');
@@ -16,7 +16,11 @@ async function getJson(url){
 
 async function loadData(){
   try{
-    [session,{records:state.records}]=await Promise.all([getJson('/api/session'),getJson('/api/workflows')]);
+    const [sessionPayload,workflowPayload]=await Promise.all([getJson('/api/session'),getJson('/api/workflows')]);
+    session=sessionPayload;
+    state.records=workflowPayload.records||[];
+    state.source=workflowPayload.source||'unknown';
+    state.warning=workflowPayload.warning||null;
   }catch(error){
     console.error(error);
     board.innerHTML='<section class="load-error"><h2>Workflow unavailable</h2><p>The protected workflow data could not be loaded. Refresh the page or sign in again.</p></section>';
@@ -45,7 +49,10 @@ function render(){
  const records=filtered();renderMetrics(records);
  document.querySelector('#userBadge').textContent=`${session.name} · ${session.role}`;
  document.querySelector('#pageTitle').textContent=session.role==='owner'?'All current work':'My assigned work';
- document.querySelector('#pageSummary').textContent=session.role==='owner'?'Live operational view across Occono workflows.':'Only work assigned to your account is shown.';
+ const baseSummary=session.role==='owner'?'Live operational view across Occono workflows.':'Only work assigned to your account is shown.';
+ const sourceLabel=state.source==='test-workbook'?'Connected to TEST workbook':'Protected demo fallback';
+ const warning=state.warning?` — ${state.warning}`:'';
+ document.querySelector('#pageSummary').textContent=`${baseSummary} ${sourceLabel}${warning}`;
  board.innerHTML=stagesForView(records).map(stage=>{const cards=records.filter(r=>r.status===stage);return `<section class="column" data-stage="${esc(stage)}"><header class="column-header"><h2>${esc(stage)}</h2><span class="count">${cards.length}</span></header><div class="card-list">${cards.length?cards.map(cardTemplate).join(''):'<div class="empty">No work here</div>'}</div></section>`}).join('');
  attachBoardEvents();
 }
