@@ -14,6 +14,22 @@
   previewStyles.href = 'assets/preview-viewport-fix.css';
   document.head.appendChild(previewStyles);
 
+  const brandStyles = document.createElement('link');
+  brandStyles.rel = 'stylesheet';
+  brandStyles.href = 'assets/brand-overrides.css';
+  document.head.appendChild(brandStyles);
+
+  document.querySelectorAll('.occono-brand').forEach((brand) => {
+    brand.textContent = '';
+    const logo = document.createElement('img');
+    logo.src = 'assets/occono-lockup.svg';
+    logo.alt = 'Occono Web Studio';
+    brand.appendChild(logo);
+  });
+
+  const themeColor = document.querySelector('meta[name="theme-color"]');
+  if (themeColor) themeColor.setAttribute('content', '#064E3B');
+
   const header = document.querySelector('.site-header');
   if (header) {
     const updateHeaderState = () => {
