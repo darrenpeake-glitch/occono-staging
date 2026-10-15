@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Build an Autonomous Content Engine | Occono</title>
+  <meta name="description" content="A practical system for producing useful content with far less manual work. Built for solopreneurs and small teams.">
+  <style>
+    :root { --bg:#0c0d10; --surface:#16181d; --text:#e8eaed; --muted:#9aa0a6; --accent:#6b9bff; --border:#2a2e36; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; background:var(--bg); color:var(--text); line-height:1.65; }
+    a { color:var(--accent); text-decoration:none; }
+    .container { max-width:720px; margin:0 auto; padding:2rem 1.25rem; }
+    header { padding:1.5rem 0; border-bottom:1px solid var(--border); margin-bottom:1.75rem; }
+    .logo { font-weight:700; font-size:1.15rem; color:var(--text); }
+    h1 { font-size:1.7rem; line-height:1.25; margin:0.75rem 0 1rem; letter-spacing:-0.02em; }
+    h2 { font-size:1.2rem; margin:2rem 0 0.7rem; }
+    p, li { margin-bottom:0.85rem; color:#c5c9d0; }
+    ol, ul { padding-left:1.35rem; margin-bottom:1.1rem; }
+    .meta { color:var(--muted); font-size:0.85rem; margin-bottom:0.75rem; }
+    .back { display:inline-block; margin-bottom:1.25rem; font-size:0.9rem; color:var(--muted); }
+    footer { margin-top:3rem; padding-top:1.4rem; border-top:1px solid var(--border); font-size:0.85rem; color:var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header><a href="../index.html" class="logo">Occono</a></header>
+    <a href="../index.html" class="back">← Back</a>
+    <div class="meta">October 2026 · Systems</div>
+    <h1>How to Build an Autonomous Content Engine</h1>
+
+    <p>Most content advice still assumes you will manually produce every piece. That approach does not scale for one person.</p>
+    <p>This is a practical loop that removes the majority of mechanical work while keeping quality high enough to be useful.</p>
+
+    <h2>The core loop</h2>
+    <ol>
+      <li><strong>Signal collection</strong> — gather topics, keyword opportunities, questions, and competitor gaps.</li>
+      <li><strong>Prioritisation</strong> — score by traffic potential × conversion potential ÷ effort.</li>
+      <li><strong>Brief</strong> — turn the top opportunity into a clear brief.</li>
+      <li><strong>Draft</strong> — produce a strong first version with structure and substance.</li>
+      <li><strong>Judgement pass</strong> — fact-check, add experience, tighten voice.</li>
+      <li><strong>Package</strong> — SEO, internal links, and distribution assets.</li>
+      <li><strong>Publish and distribute</strong>.</li>
+      <li><strong>Feedback</strong> — improve the system from what actually performed.</li>
+    </ol>
+
+    <p>The goal is not “AI writes everything”. The goal is that most of the repetitive work disappears so the remaining judgement time produces far more output.</p>
+
+    <h2>Minimal useful stack</h2>
+    <ul>
+      <li>Research and ideation: strong reasoning model + keyword data</li>
+      <li>Orchestration: n8n or Make</li>
+      <li>Writing and refinement: high-quality reasoning model</li>
+      <li>SEO support: focused optimisation tool</li>
+      <li>Publishing and distribution: your site + scheduled social/email</li>
+    </ul>
+
+    <h2>Common failure modes</h2>
+    <ul>
+      <li>Automating judgement too early → generic content</li>
+      <li>No feedback loop → the system never improves</li>
+      <li>Chasing volume before the process is reliable</li>
+      <li>Building complex workflows before a simple one works</li>
+    </ul>
+
+    <p>Start simple. Measure. Improve.</p>
+
+    <footer>
+      <p>© 2026 Occono</p>
+    </footer>
+  </div>
+</body>
+</html>
