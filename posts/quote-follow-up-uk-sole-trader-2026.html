@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Follow Up Quotes Automatically as a UK Sole Trader | Occono</title>
+  <meta name="description" content="A practical quote chase for UK sole traders: one spreadsheet, two short emails, a daily Make scenario, and when ICO rules mean you should stop.">
+  <style>
+    :root { --bg:#0c0d10; --surface:#16181d; --text:#e8eaed; --muted:#9aa0a6; --accent:#6b9bff; --border:#2a2e36; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; background:var(--bg); color:var(--text); line-height:1.65; }
+    a { color:var(--accent); text-decoration:none; }
+    .container { max-width:720px; margin:0 auto; padding:2rem 1.25rem; }
+    header { padding:1.5rem 0; border-bottom:1px solid var(--border); margin-bottom:1.75rem; }
+    .logo { font-weight:700; font-size:1.15rem; color:var(--text); }
+    h1 { font-size:1.7rem; line-height:1.25; margin:0.75rem 0 1rem; letter-spacing:-0.02em; }
+    h2 { font-size:1.2rem; margin:2rem 0 0.7rem; }
+    p, li { margin-bottom:0.85rem; color:#c5c9d0; }
+    ol, ul { padding-left:1.35rem; margin-bottom:1.1rem; }
+    table { width:100%; border-collapse:collapse; margin:1.4rem 0; font-size:0.9rem; }
+    th, td { border:1px solid var(--border); padding:0.55rem 0.7rem; text-align:left; }
+    th { background:var(--surface); }
+    .meta { color:var(--muted); font-size:0.85rem; margin-bottom:0.75rem; }
+    .back { display:inline-block; margin-bottom:1.25rem; font-size:0.9rem; color:var(--muted); }
+    .cta { display:inline-block; margin-top:1rem; padding:0.6rem 1.1rem; background:var(--accent); color:#0c0d10; font-weight:600; border-radius:6px; }
+    .cta:hover { opacity:0.9; text-decoration:none; }
+    footer { margin-top:3rem; padding-top:1.4rem; border-top:1px solid var(--border); font-size:0.85rem; color:var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header><a href="../index.html" class="logo">Occono</a></header>
+    <a href="../index.html" class="back">← Back</a>
+    <div class="meta">17 October 2026 · Systems</div>
+    <h1>How to Follow Up Quotes Automatically as a UK Sole Trader</h1>
+
+    <p>Affiliate note: Occono may earn a commission if you use the Make, Systeme.io, or beehiiv links below, at no extra cost to you.</p>
+
+    <p>You already wrote the quote. The work that gets dropped is the chase: three days later you are on another job, and the email sits in Sent. This is a small system that sends two reminders and then stops.</p>
+    <p>You still set the price and the scope. The automation only sends the words you wrote, on the dates you chose, and only while you have left the row open.</p>
+
+    <h2>What you are building</h2>
+    <p>One Google Sheet is the list of open quotes. Once a day, <a href="https://www.make.com/en/register?pc=occono" rel="sponsored noopener" target="_blank">Make</a> looks for rows that are due, sends one email from your own Gmail account, and marks that chase as sent.</p>
+    <p>Two chases are enough. The first asks whether the quote you already sent is right. The second says you will close it. After that, the row stops matching and nothing further goes out.</p>
+    <p>If you only send the odd quote, put the same two dates in your calendar and send the emails yourself. Build the scenario when quotes are starting to slip.</p>
+
+    <h2>The sheet</h2>
+    <p>Create a Google Sheet with these headings in row 1. Put one quote per row underneath. Type the chase dates as real dates, using the spreadsheet’s date format, so a later comparison can read them.</p>
+    <table>
+      <thead>
+        <tr><th>Column</th><th>Heading</th><th>What you put in it</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>A</td><td>Name</td><td>The person you quoted</td></tr>
+        <tr><td>B</td><td>Email</td><td>The address they gave you</td></tr>
+        <tr><td>C</td><td>Job</td><td>A few words they will recognise, such as “bathroom quote”</td></tr>
+        <tr><td>D</td><td>Quote sent</td><td>The date you sent the quote</td></tr>
+        <tr><td>E</td><td>Status</td><td><code>open</code> while you are willing to chase. Change it to <code>won</code>, <code>lost</code>, or <code>stop</code> as soon as you know</td></tr>
+        <tr><td>F</td><td>First chase</td><td>The date of the first reminder. Three days after the quote is a sensible start</td></tr>
+        <tr><td>G</td><td>Second chase</td><td>The date of the last reminder. A few days after the first</td></tr>
+        <tr><td>H</td><td>First sent</td><td>Leave blank. The scenario writes <code>yes</code></td></tr>
+        <tr><td>I</td><td>Second sent</td><td>Leave blank. The scenario writes <code>yes</code></td></tr>
+      </tbody>
+    </table>
+    <p>When someone replies, change Status before the next morning’s run. The scenario does not read your inbox. A reply you have already answered should never get another automated chase.</p>
+
+    <h2>The two emails</h2>
+    <p>Keep both emails about that quote. Leave out discounts, other services, and a newsletter sign-up. Those extras change the message into marketing, which is covered further down.</p>
+    <p>First chase. Subject: <em>Quote for [job]</em></p>
+    <p>Hello [name]. I sent the quote for [job] on [date]. If the price or the scope is wrong, reply and I will adjust it. If you want to go ahead, reply to this email and I will book it in.</p>
+    <p>Second chase. Subject: <em>Closing the quote for [job]</em></p>
+    <p>Hello [name]. I have not heard back about the quote for [job]. I will close it after this note. If you want it later, reply and I will reopen it.</p>
+    <p>Sign with your own name. In Make, map Name, Job, and Quote sent into those sentences so each email names the right job. Map Email into the To field.</p>
+
+    <h2>The Make scenario</h2>
+    <p>Make’s own guide, <a href="https://www.make.com/en/how-to-guides/how-to-automatically-send-emails-from-google-sheets">How to automatically send emails from Google Sheets</a>, is the pattern below: Search Rows, a filter, Gmail’s Send an Email, another filter, then Update a Row. The quote chase adds a router so the first and second emails stay separate. A router splits one scenario into routes, and each route can have its own filter.</p>
+    <ol>
+      <li>In Make, create a scenario and add <strong>Google Sheets &gt; Search Rows</strong>. Connect the Google account that owns the sheet. Choose the spreadsheet and the tab. Set “Table contains headers” to Yes. Set the column range to A–Z, wider only if your sheet actually goes past Z.</li>
+      <li>Add a <strong>Router</strong> after Search Rows.</li>
+      <li>On the first route, add a filter named “First chase is due”. Give it all of these conditions: Status equal to <code>open</code>, First sent not equal to <code>yes</code>, First chase exists, and First chase less or equal than <code>now</code>. Make’s date help uses the operator name “less or equal than” for this kind of comparison, and <code>now</code> is Make’s current date and time. If your dropdown words the operator differently, choose the one that means the chase date is today or earlier.</li>
+      <li>On that same route, add <strong>Gmail &gt; Send an Email</strong>. Connect the Gmail account clients already know. Put the mapped email in To, and use the first-chase wording above. Make’s guide also says you can use Outlook instead and adjust that module.</li>
+      <li>After Send an Email, add a filter that passes on only when the Gmail module’s Message ID exists. Then add <strong>Google Sheets &gt; Update a Row</strong>. Map Row number from Search Rows. With “Table contains headers” set to Yes, write <code>yes</code> in First sent and leave every other value empty.</li>
+      <li>On the second route, use the same modules with the second-chase wording. The filter is: Status equal to <code>open</code>, First sent equal to <code>yes</code>, Second sent not equal to <code>yes</code>, Second chase exists, and Second chase less or equal than <code>now</code>. The update writes <code>yes</code> in Second sent only.</li>
+    </ol>
+    <p>Make’s filter help lets you set more than one condition on a filter. The test below checks that a row has to pass every condition before an email goes out.</p>
+    <p>Set Make’s organisation timezone to <code>Europe/London</code> before you trust “today”. Make’s help for <code>formatDate</code> and <code>parseDate</code> says that an omitted timezone uses the organisation timezone, and that you can edit it. Confirm the chase fires for a date of today and stays quiet for a date of tomorrow before you leave the scenario running.</p>
+    <p>Schedule the scenario once a day, from the schedule control in the scenario toolbar, then activate it. Make’s scheduling guide gives the credit cost of the trigger module on its own: once a day is 30 credits a month, every hour is 24 credits a day, and every five minutes is 288 credits a day. The rest of the scenario uses more credits for each row it processes. A quote chase does not need to look at the sheet every 15 minutes.</p>
+    <p>Leave the Sleep module out of this. Make’s help limits Sleep to 300 seconds. It is a short pause between requests, and it will not wait three days. The wait belongs in the date columns.</p>
+    <p>If Search Rows has a Limit field, set one. Make’s rate-limit guide recommends processing up to 20 records in a run when a scenario could otherwise hammer an app. A sole trader rarely has 20 quotes due on the same morning. The limit is there so a wrong filter cannot mail the whole history in one go.</p>
+
+    <h2>Test it on yourself first</h2>
+    <p>Make’s guide says to fill the first data row with your own email and use Run once before any real recipient. Do that here.</p>
+    <ul>
+      <li>Row with your email, Status <code>open</code>, First chase today, Second chase next week, both sent columns blank. Run once. You should receive only the first email, and First sent should become <code>yes</code>. Name, email, job, and both dates should still be in the row. If the update has wiped them, clear those fields out of Update a Row and run the test again.</li>
+      <li>A second row with First chase set to tomorrow. Run once. That row should not send.</li>
+      <li>On the first row, set Second chase to today and run once. You should receive only the second email, and Second sent should become <code>yes</code>.</li>
+      <li>Set that row’s Status to <code>stop</code> and run once. Nothing should send.</li>
+    </ul>
+    <p>Gmail has its own daily sending limit. Make’s guide says the scenario is subject to the email provider’s limit, and it does not publish a number to rely on. Check Google’s current limit for the kind of account you use before you point this at a long backlog.</p>
+    <p>Make’s Sheets-to-email walkthrough, dated November 2023, describes the free plan as enough to try that scenario. Plans change. Check the pricing page on Make’s own site before you assume a free allowance still covers a daily run.</p>
+    <p><a class="cta" href="https://www.make.com/en/register?pc=occono" rel="sponsored noopener" target="_blank">Try Make →</a></p>
+
+    <h2>When the enquiry starts on a form</h2>
+    <p>Use the sheet and Make when you have already emailed a priced quote yourself. Use <a href="https://systeme.io/?sa=sa0284007873ebd22f73c9d8439d9c24fc8d09c8e8" rel="sponsored noopener" target="_blank">Systeme.io</a> when the enquiry arrives on a form you host there, and the chase is a standard email rather than a one-off price.</p>
+    <p>Systeme.io’s workflow help describes a canvas you open from Automations, then Workflows. A new workflow stays inactive until you activate it from the three-dot menu. It only runs for events after that. People who enquired before you turned it on are left out.</p>
+    <p>The triggers include a form subscribed on a funnel step, a website form, or a blog form. The steps include Send an email, a Delay, and Add a new row to a Google Sheet. A delay can be minutes, hours, days, or a fixed date up to one year ahead. Changing the length of a delay later applies to new contacts. People already waiting keep the delay they started with.</p>
+    <p>A practical workflow is: form subscribed, send a short acknowledgement, wait the number of days you chose, then send the chase. A Decision step can check whether a contact has a tag. Systeme.io’s own example waits seven days, then looks for a tag that an automation adds after a purchase. Use that when Systeme.io already knows the job is done, for example after a sale. A reply that only lands in your own inbox is easier to stop on the sheet, by changing Status.</p>
+    <p>You still write a bespoke price yourself. The workflow email chases or acknowledges. It is the wrong place to invent a figure per job.</p>
+    <p>Pick one sender for each person. If the workflow also adds a row to this sheet, write a status other than <code>open</code> so Make leaves that person alone. Running both senders emails them twice.</p>
+    <p>Check the plan limits inside your Systeme.io account before you depend on workflows, delays, or the Google Sheet action. This article does not quote a price.</p>
+
+    <h2>When a chase becomes marketing</h2>
+    <p>This is a reading of the ICO’s published guidance, not legal advice. The ICO says its business-to-business marketing guidance is under review because of the Data (Use and Access) Act, so read the current pages before you rely on them.</p>
+    <p>The ICO describes a service message as an administrative or customer-service note that does not promote anything. General branding on that note is fine. The moment the message promotes another product, a discount, or a sign-up, the ICO says it counts as direct marketing.</p>
+    <p>That is why the two emails above only talk about the quote the person asked for. Sending the quote they specifically asked you to email is, in the ICO’s terms, solicited. A later email about a different offer, which they did not ask for, is unsolicited marketing.</p>
+    <p>For unsolicited marketing by email, the ICO’s rules depend on who you are emailing:</p>
+    <ul>
+      <li>Sole traders and ordinary partnerships are individual subscribers. The ICO includes non-limited-liability partnerships in England, Wales, and Northern Ireland in that group. You need consent, or you need to meet every part of the soft opt-in.</li>
+      <li>Limited companies, LLPs, Scottish partnerships, and some government bodies are corporate subscribers. The ICO says the electronic-mail consent rule does not apply to them. You still have to avoid hiding your identity, and you have to include a valid address they can use to opt out. Where the address identifies a person, the UK GDPR applies as well, including the right to object to direct marketing.</li>
+      <li>If you are not sure which kind of subscriber you have, the ICO says to treat the address as an individual subscriber.</li>
+    </ul>
+    <p>The ICO’s products-and-services soft opt-in has five parts, and all of them have to be true. You collected the contact details yourself. You did it during a sale or while negotiating a sale. You are only marketing your own similar products and services. You offered a way to opt out when you collected the details. You offer a way to opt out in every later marketing email. The ICO’s current guidance says requesting a quote, or asking for more detail about what you offer, can be negotiations for a sale. An opt-out at the time you took the details is still required. A quote request on its own does not complete the soft opt-in.</p>
+    <p>A newsletter is that later marketing, so it needs its own permission. <a href="https://www.beehiiv.com/?via=occono-ghastly" rel="sponsored noopener" target="_blank">beehiiv</a> is a newsletter platform for publishing updates to people who should be on that list. Leave quote requests off it unless consent or the full soft opt-in is already in place. Check beehiiv’s current plans on their site before you pay for one.</p>
+    <p>The pages to read:</p>
+    <ul>
+      <li><a href="https://ico.org.uk/for-organisations/direct-marketing-and-privacy-and-electronic-communications/guidance-on-direct-marketing-using-electronic-mail/key-concepts-for-direct-marketing-using-electronic-mail/">ICO: key concepts for direct marketing by electronic mail</a></li>
+      <li><a href="https://ico.org.uk/for-organisations/direct-marketing-and-privacy-and-electronic-communications/guidance-on-direct-marketing-using-electronic-mail/how-do-we-comply-with-the-pecr-electronic-mail-marketing-rules">ICO: how the electronic mail rules work, including the soft opt-in</a></li>
+      <li><a href="https://ico.org.uk/for-organisations/direct-marketing-and-privacy-and-electronic-communications/business-to-business-marketing">ICO: business-to-business marketing</a></li>
+    </ul>
+
+    <h2>What to leave manual</h2>
+    <ul>
+      <li>The price, the scope, and any reply that needs a decision.</li>
+      <li>Status. The moment they reply, you change the cell. That is the off switch.</li>
+      <li>A third automated email. Two notes about one quote is a chase. A third starts to feel like a sequence they never asked for.</li>
+    </ul>
+
+    <h2>Affiliate note</h2>
+    <p>Occono may earn a commission when you buy through links on this site, at no extra cost to you.</p>
+
+    <section>
+      <script async data-uid="158b485d64" src="https://occono.kit.com/158b485d64/index.js"></script>
+      <p>By subscribing you agree to receive Occono emails. You can unsubscribe at any time. See our <a href="/privacy.html">privacy notice</a>.</p>
+    </section>
+
+    <footer>
+      <p>© 2026 Occono</p>
+    </footer>
+  </div>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cc530621edd84652a9dfebb96cba651f"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
