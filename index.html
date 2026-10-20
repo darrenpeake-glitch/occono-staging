@@ -8,12 +8,14 @@
   <link rel="canonical" href="https://www.occono.co.uk/">
   <style>
     :root {
-      --bg: #0c0d10;
-      --surface: #16181d;
-      --text: #e8eaed;
-      --muted: #9aa0a6;
+      --bg: #f6f5f2;
+      --surface: #ffffff;
+      --text: #16181d;
+      --text-soft: #2a2e36;
+      --muted: #4e5561;
       --accent: #6b9bff;
-      --border: #2a2e36;
+      --link: #1a4fbf;
+      --border: #d9dde5;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -40,7 +42,7 @@
     nav a:hover { color: var(--text); text-decoration: none; }
     h1 { font-size: 2rem; line-height: 1.2; letter-spacing: -0.03em; margin-bottom: 1rem; }
     h2 { font-size: 1.25rem; margin: 2.25rem 0 0.85rem; letter-spacing: -0.01em; }
-    p { margin-bottom: 1rem; color: #c5c9d0; }
+    p { margin-bottom: 1rem; color: var(--text-soft); }
     .lead { font-size: 1.1rem; color: var(--muted); margin-bottom: 1.75rem; }
     .card {
       background: var(--surface);
@@ -50,7 +52,7 @@
       margin-bottom: 0.9rem;
       transition: border-color 0.15s;
     }
-    .card:hover { border-color: #3d4452; }
+    .card:hover { border-color: var(--link); }
     .card h3 { font-size: 1.05rem; margin-bottom: 0.3rem; color: var(--text); }
     .card p { font-size: 0.92rem; margin-bottom: 0; color: var(--muted); }
     .meta { font-size: 0.78rem; color: var(--muted); margin-bottom: 0.4rem; }
@@ -59,8 +61,8 @@
       font-size: 0.7rem;
       font-weight: 600;
       letter-spacing: 0.04em;
-      color: var(--accent);
-      background: rgba(107,155,255,0.1);
+      color: var(--link);
+      background: rgba(26, 79, 191, 0.08);
       padding: 0.2rem 0.5rem;
       border-radius: 4px;
       margin-bottom: 1rem;
@@ -72,7 +74,7 @@
     }
     #free-guide li {
       margin-bottom: 0.45rem;
-      color: #c5c9d0;
+      color: var(--text-soft);
     }
     #free-guide > p:last-of-type {
       margin-top: 0.85rem;
@@ -110,7 +112,7 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <meta name="theme-color" content="#0c0d10">
+  <meta name="theme-color" content="#f6f5f2">
   <meta property="og:site_name" content="Occono">
   <meta property="og:locale" content="en_GB">
   <meta property="og:type" content="website">
@@ -127,7 +129,7 @@
   <meta name="twitter:image" content="https://www.occono.co.uk/assets/og-default.png">
   <link rel="stylesheet" href="/site.css">
 </head>
-<body class="home">
+<body class="home reading">
   <a class="skip" href="#content">Skip to content</a>
   <div class="container">
     <header class="site-header">

@@ -597,8 +597,8 @@ body.home .container {
   }
 }
 
-/* Article reading theme. Homepage stays on the dark brand.
-   Links use a darker blue: the accent fails contrast on white. */
+/* Light reading theme for the whole site, including the homepage.
+   Links use a darker blue: the accent fails contrast as text on this background. */
 body.reading {
   --bg: #f6f5f2;
   --surface: #ffffff;
@@ -693,6 +693,36 @@ body.home .hero-byline {
 
 body.home .hero-byline p {
   margin: 0;
+  color: var(--text-soft);
+}
+
+body.home .badge {
+  color: var(--link);
+  background: rgba(26, 79, 191, 0.08);
+}
+
+body.home .card {
+  background: var(--surface);
+}
+
+body.home a.card:hover {
+  border-color: var(--link);
+}
+
+body.home #free-guide li {
+  color: var(--text-soft);
+}
+
+/* The Kit embed is a light card. Keep its own type and button, and
+   stop the page heading styles from stretching the form title. */
+body.home .formkit-form[data-uid="158b485d64"] {
+  margin: 0.4rem 0 0.2rem;
+}
+
+body.home .formkit-form[data-uid="158b485d64"] h2 {
+  font-family: var(--sans);
+  letter-spacing: 0;
+  line-height: 1.25;
 }
 
 .method,
