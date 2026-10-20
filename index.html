@@ -32,6 +32,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem 1.5rem;
     }
     .logo { font-size: 1.35rem; font-weight: 700; letter-spacing: -0.02em; color: var(--text); }
     nav a { color: var(--muted); font-size: 0.9rem; margin-left: 1.25rem; }
@@ -63,6 +65,20 @@
       border-radius: 4px;
       margin-bottom: 1rem;
     }
+    #free-guide { scroll-margin-top: 1.25rem; }
+    #free-guide ul {
+      margin: 0 0 1.15rem;
+      padding-left: 1.25rem;
+    }
+    #free-guide li {
+      margin-bottom: 0.45rem;
+      color: #c5c9d0;
+    }
+    #free-guide > p:last-of-type {
+      margin-top: 0.85rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
     footer {
       margin-top: 4rem;
       padding-top: 1.5rem;
@@ -79,6 +95,7 @@
       <nav>
         <a href="#latest">Latest</a>
         <a href="#about">About</a>
+        <a href="#free-guide">Free Starter Pack</a>
       </nav>
     </header>
 
@@ -182,9 +199,17 @@
       <p>We prioritise clarity over hype, working systems over theory, and recommendations we would actually use in a one-person or small-team setting.</p>
     </section>
 
-    <section>
+    <section id="free-guide">
+      <h2>Automate your enquiries this week, free</h2>
+      <p>Get the free Lite edition of the Occono Automation Starter Pack. It's a practical PDF for UK small businesses and sole traders that shows you what to automate first, then walks you through building it in Make on the free plan.</p>
+      <ul>
+        <li>A one-week time-audit worksheet and scoring table, to find the admin that's really costing you time</li>
+        <li>One complete workflow: new website enquiry to a Google Sheet “CRM”, plus an instant, friendly auto-reply</li>
+        <li>Credit estimates and a “what can go wrong” list, so it runs on Make's free plan</li>
+        <li>A one-page checklist to build, test and go live safely</li>
+      </ul>
       <script async data-uid="158b485d64" src="https://occono.kit.com/158b485d64/index.js"></script>
-      <p>By subscribing you agree to receive Occono emails. You can unsubscribe at any time. See our <a href="/privacy.html">privacy notice</a>.</p>
+      <p>You'll get the PDF by email (check your spam folder if it doesn't arrive), and you'll join the Occono email list for practical automation tips and news of the full pack. Unsubscribe any time. See our <a href="/privacy.html">privacy notice</a>.</p>
     </section>
 
     <footer>
