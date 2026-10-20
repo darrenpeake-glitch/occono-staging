@@ -794,6 +794,26 @@ body.home .formkit-form[data-uid="158b485d64"] h2 {
   margin-bottom: 0.85rem;
 }
 
+figure.screen {
+  margin: 1.15rem 0 1.4rem;
+}
+
+figure.screen img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+figure.screen figcaption {
+  margin: 0.45rem 0 0;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
 @media print {
   body {
     background: #fff;
