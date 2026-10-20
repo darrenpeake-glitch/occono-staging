@@ -108,6 +108,6 @@
   }
 
   .container.has-sidebar > footer {
-    max-width: calc(720px - 2.5rem);
+    max-width: none;
   }
 }
