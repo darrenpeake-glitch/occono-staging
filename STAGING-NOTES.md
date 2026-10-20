@@ -14,6 +14,7 @@ This site is live as Occono — Practical AI Systems for small businesses and so
 - Homepage: `index.html`
 - Articles under `posts/`
 - Legal pages: `privacy.html`, `cookies.html`, `accessibility.html`, `website-terms.html`
+- About the publication: `about.html`, `how-we-test.html`, `affiliate-disclosure.html`
 
 The earlier web-studio portfolio, case studies, and concept sites (garage, builder, marine, restaurant, shop, stays) have been removed.
 

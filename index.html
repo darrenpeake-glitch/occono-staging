@@ -8,12 +8,14 @@
   <link rel="canonical" href="https://www.occono.co.uk/">
   <style>
     :root {
-      --bg: #0c0d10;
-      --surface: #16181d;
-      --text: #e8eaed;
-      --muted: #9aa0a6;
+      --bg: #f6f5f2;
+      --surface: #ffffff;
+      --text: #16181d;
+      --text-soft: #2a2e36;
+      --muted: #4e5561;
       --accent: #6b9bff;
-      --border: #2a2e36;
+      --link: #1a4fbf;
+      --border: #d9dde5;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -40,7 +42,7 @@
     nav a:hover { color: var(--text); text-decoration: none; }
     h1 { font-size: 2rem; line-height: 1.2; letter-spacing: -0.03em; margin-bottom: 1rem; }
     h2 { font-size: 1.25rem; margin: 2.25rem 0 0.85rem; letter-spacing: -0.01em; }
-    p { margin-bottom: 1rem; color: #c5c9d0; }
+    p { margin-bottom: 1rem; color: var(--text-soft); }
     .lead { font-size: 1.1rem; color: var(--muted); margin-bottom: 1.75rem; }
     .card {
       background: var(--surface);
@@ -50,7 +52,7 @@
       margin-bottom: 0.9rem;
       transition: border-color 0.15s;
     }
-    .card:hover { border-color: #3d4452; }
+    .card:hover { border-color: var(--link); }
     .card h3 { font-size: 1.05rem; margin-bottom: 0.3rem; color: var(--text); }
     .card p { font-size: 0.92rem; margin-bottom: 0; color: var(--muted); }
     .meta { font-size: 0.78rem; color: var(--muted); margin-bottom: 0.4rem; }
@@ -59,8 +61,8 @@
       font-size: 0.7rem;
       font-weight: 600;
       letter-spacing: 0.04em;
-      color: var(--accent);
-      background: rgba(107,155,255,0.1);
+      color: var(--link);
+      background: rgba(26, 79, 191, 0.08);
       padding: 0.2rem 0.5rem;
       border-radius: 4px;
       margin-bottom: 1rem;
@@ -72,7 +74,7 @@
     }
     #free-guide li {
       margin-bottom: 0.45rem;
-      color: #c5c9d0;
+      color: var(--text-soft);
     }
     #free-guide > p:last-of-type {
       margin-top: 0.85rem;
@@ -107,107 +109,127 @@
       color: var(--muted);
     }
   </style>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="theme-color" content="#f6f5f2">
+  <meta property="og:site_name" content="Occono">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Occono — Practical AI Systems for Small Businesses">
+  <meta property="og:description" content="Clear, practical guidance on AI automation and systems that help solopreneurs and small businesses operate with less friction and more leverage.">
+  <meta property="og:url" content="https://www.occono.co.uk/">
+  <meta property="og:image" content="https://www.occono.co.uk/assets/og-default.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Occono — practical AI and automation guides for small businesses">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Occono — Practical AI Systems for Small Businesses">
+  <meta name="twitter:description" content="Clear, practical guidance on AI automation and systems that help solopreneurs and small businesses operate with less friction and more leverage.">
+  <meta name="twitter:image" content="https://www.occono.co.uk/assets/og-default.png">
+  <link rel="stylesheet" href="/site.css">
 </head>
-<body>
+<body class="home reading">
+  <a class="skip" href="#content">Skip to content</a>
   <div class="container">
-    <header>
-      <div class="logo">Occono</div>
-      <nav>
-        <a href="#latest">Latest</a>
-        <a href="#about">About</a>
-        <a href="#free-guide">Free Starter Pack</a>
-      </nav>
-    </header>
+    <header class="site-header">
+          <a class="logo" href="/index.html">
+            <svg class="mark" viewBox="0 0 32 32" width="28" height="28" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="8" fill="#6b9bff"/><circle cx="16" cy="16" r="6.5" fill="none" stroke="#0c0d10" stroke-width="2.6"/></svg>
+            <span class="word">Occono</span>
+          </a>
+          <nav class="site-nav" aria-label="Primary">
+            <a href="#latest">Guides</a>
+            <a href="/about.html">About</a>
+            <a href="/how-we-test.html">How we test</a>
+            <a href="#free-guide">Free Starter Pack</a>
+          </nav>
+        </header>
 
-    <section>
+    <section id="content">
       <span class="badge">PRACTICAL AI SYSTEMS</span>
       <h1>AI that actually reduces work for small businesses.</h1>
       <p class="lead">Clear systems, honest tool evaluations, and working automation for solopreneurs and small teams who want leverage without the noise.</p>
+      <div class="editor-intro hero-byline">
+        <img src="/assets/sam-calder.svg" width="64" height="64" alt="">
+        <p>Written by <a href="/about.html#editor">Sam Calder</a>, the pen name Occono’s editor uses.</p>
+      </div>
     </section>
 
-    <section id="latest">
-      <h2>Latest</h2>
+        <section id="latest">
+      <h2>Tool comparisons</h2>
 
       <a href="posts/mailchimp-alternatives-uk-2026.html" class="card" style="display:block;">
-        <div class="meta">Tools · 20 October 2026</div>
+        <div class="meta">Tools · Sam Calder · 20 October 2026</div>
         <h3>Which Mailchimp alternative lets a UK business send more before it pays?</h3>
         <p>Free-plan limits, starting prices, and public ratings for Systeme.io, beehiiv, Kit, MailerLite and Brevo.</p>
       </a>
-
       <a href="posts/systeme-io-vs-gohighlevel-2026.html" class="card" style="display:block;">
-        <div class="meta">Tools · 20 October 2026</div>
+        <div class="meta">Tools · Sam Calder · 20 October 2026</div>
         <h3>Systeme.io or GoHighLevel: which all-in-one fits a UK solopreneur?</h3>
         <p>Free plan vs $97 entry, CRM pipeline limits, SMS charges, and which platform actually saves money for one-person businesses.</p>
       </a>
-
       <a href="posts/beehiiv-vs-substack-2026.html" class="card" style="display:block;">
-        <div class="meta">Tools · October 2026</div>
+        <div class="meta">Tools · Sam Calder · 19 October 2026</div>
         <h3>beehiiv or Substack: which keeps more of a UK creator’s money?</h3>
         <p>Free plans, the cut on paid subscriptions, and public ratings for two newsletter platforms.</p>
       </a>
-
-      <a href="posts/missed-calls-uk-sole-trader-2026.html" class="card" style="display:block;">
-        <div class="meta">Systems · October 2026</div>
-        <h3>How to Handle a Missed Call When You Work Alone</h3>
-        <p>A greeting that asks for four facts, a callback note, and what phone transcription can and cannot do.</p>
-      </a>
-
-      <a href="posts/quote-follow-up-uk-sole-trader-2026.html" class="card" style="display:block;">
-        <div class="meta">Systems · October 2026</div>
-        <h3>How to Follow Up Quotes Automatically as a UK Sole Trader</h3>
-        <p>A sheet, two short chase emails, and when UK marketing rules mean you should stop.</p>
-      </a>
-
       <a href="posts/systeme-io-vs-clickfunnels-2026.html" class="card" style="display:block;">
-        <div class="meta">Tools · October 2026</div>
+        <div class="meta">Tools · Sam Calder · October 2026</div>
         <h3>Systeme.io vs ClickFunnels for Solopreneurs in 2026</h3>
         <p>Which platform gives better value when you need funnels and email without a high monthly cost.</p>
       </a>
-
       <a href="posts/kit-vs-systeme-io-2026.html" class="card" style="display:block;">
-        <div class="meta">Tools · October 2026</div>
+        <div class="meta">Tools · Sam Calder · 17 October 2026</div>
         <h3>Kit or Systeme.io: which costs a UK sole trader less?</h3>
         <p>Free plans, starting prices, and public ratings for email versus a simple all-in-one offer.</p>
       </a>
-
       <a href="posts/systeme-io-vs-kajabi-2026.html" class="card" style="display:block;">
-        <div class="meta">Tools · October 2026</div>
+        <div class="meta">Tools · Sam Calder · October 2026</div>
         <h3>Systeme.io vs Kajabi for Solopreneurs in 2026</h3>
         <p>Which all-in-one platform makes sense when you’re selling digital products or courses alone.</p>
       </a>
-
-      <a href="posts/claude-projects-for-solopreneurs-2026.html" class="card" style="display:block;">
-        <div class="meta">Systems · October 2026</div>
-        <h3>Claude Projects for Solopreneurs in 2026</h3>
-        <p>How to turn Claude into a practical operating system instead of a one-off chat tool.</p>
-      </a>
-
       <a href="posts/make-vs-zapier-2026.html" class="card" style="display:block;">
-        <div class="meta">Tools · October 2026</div>
+        <div class="meta">Tools · Sam Calder · 17 October 2026</div>
         <h3>Make or Zapier: which saves a UK sole trader more?</h3>
         <p>Free-plan limits, starting prices, and public ratings for the two automation tools.</p>
       </a>
-
       <a href="posts/systeme-io-for-solopreneurs-2026.html" class="card" style="display:block;">
-        <div class="meta">Tools · October 2026</div>
+        <div class="meta">Tools · Sam Calder · October 2026</div>
         <h3>Is Systeme.io Worth It for Solopreneurs in 2026?</h3>
         <p>Honest look at the free plan, funnels, email and whether it actually makes sense for one-person operations.</p>
       </a>
-
       <a href="posts/n8n-vs-make-2026.html" class="card" style="display:block;">
-        <div class="meta">Tools · October 2026</div>
+        <div class="meta">Tools · Sam Calder · October 2026</div>
         <h3>n8n vs Make for Solopreneurs in 2026</h3>
         <p>Clear comparison of the two main automation platforms.</p>
       </a>
-
       <a href="posts/best-ai-automation-tools-2026.html" class="card" style="display:block;">
-        <div class="meta">Tools · October 2026</div>
+        <div class="meta">Tools · Sam Calder · October 2026</div>
         <h3>Best AI Automation Tools for Solopreneurs in 2026</h3>
         <p>A practical ranking focused on time saved and pricing that makes sense for one person.</p>
       </a>
+    </section>
 
+    <section id="systems">
+      <h2>Systems &amp; how-tos</h2>
+
+      <a href="posts/missed-calls-uk-sole-trader-2026.html" class="card" style="display:block;">
+        <div class="meta">Systems · Sam Calder · 18 October 2026</div>
+        <h3>How to Handle a Missed Call When You Work Alone</h3>
+        <p>A greeting that asks for four facts, a callback note, and what phone transcription can and cannot do.</p>
+      </a>
+      <a href="posts/quote-follow-up-uk-sole-trader-2026.html" class="card" style="display:block;">
+        <div class="meta">Systems · Sam Calder · 17 October 2026</div>
+        <h3>How to Follow Up Quotes Automatically as a UK Sole Trader</h3>
+        <p>A sheet, two short chase emails, and when UK marketing rules mean you should stop.</p>
+      </a>
+      <a href="posts/claude-projects-for-solopreneurs-2026.html" class="card" style="display:block;">
+        <div class="meta">Systems · Sam Calder · October 2026</div>
+        <h3>Claude Projects for Solopreneurs in 2026</h3>
+        <p>How to turn Claude into a practical operating system instead of a one-off chat tool.</p>
+      </a>
       <a href="posts/autonomous-content-engine.html" class="card" style="display:block;">
-        <div class="meta">Systems · October 2026</div>
+        <div class="meta">Systems · Sam Calder · October 2026</div>
         <h3>How to Build an Autonomous Content Engine</h3>
         <p>A practical loop for producing useful content with far less manual work.</p>
       </a>
@@ -215,8 +237,9 @@
 
     <section id="about">
       <h2>What Occono is</h2>
-      <p>Occono focuses on practical AI systems and automation that help small businesses and independent operators do more with less friction.</p>
-      <p>We prioritise clarity over hype, working systems over theory, and recommendations we would actually use in a one-person or small-team setting.</p>
+      <p>Occono publishes practical guides for small businesses and sole traders: which tool fits a one-person job, and the short systems that take admin off the list.</p>
+      <p>We prioritise clarity over hype, and working systems over theory, for a one-person or small-team setting. The editor writes as <a href="/about.html#editor">Sam Calder</a>.</p>
+      <p><a href="/about.html">About Occono</a> · <a href="/how-we-test.html">How we test</a></p>
     </section>
 
     <section id="free-guide">
@@ -248,13 +271,13 @@
           <p>Newsletters, free plan.</p>
         </a>
       </div>
-      <p class="tool-note">Some links are <a href="/website-terms.html">affiliate links</a>: we may earn a commission at no extra cost to you.</p>
+      <p class="tool-note">Some links are <a href="/website-terms.html">affiliate links</a>: we may earn a commission at no extra cost to you. <a href="/affiliate-disclosure.html">Affiliate disclosure</a>.</p>
     </section>
 
-    <footer>
+    <footer class="site-footer">
       <p>© 2026 Occono · Practical AI systems for small businesses</p>
-      <p style="margin-top:0.4rem;">Affiliate disclosure: We may earn commissions from tools we recommend, at no extra cost to you.</p>
-      <p style="margin-top:0.6rem;"><a href="privacy.html">Privacy</a> · <a href="cookies.html">Cookies</a> · <a href="accessibility.html">Accessibility</a> · <a href="website-terms.html">Website terms</a></p>
+      <p>Some links on this site are affiliate links. We may earn a commission at no extra cost to you.</p>
+      <p class="footer-links"><a href="/about.html">About</a> · <a href="/how-we-test.html">How we test</a> · <a href="/affiliate-disclosure.html">Affiliate disclosure</a> · <a href="/privacy.html">Privacy</a> · <a href="/cookies.html">Cookies</a> · <a href="/accessibility.html">Accessibility</a> · <a href="/website-terms.html">Website terms</a></p>
     </footer>
   </div>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cc530621edd84652a9dfebb96cba651f"}'></script><!-- End Cloudflare Web Analytics -->
