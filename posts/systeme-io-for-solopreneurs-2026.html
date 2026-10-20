@@ -24,9 +24,12 @@
     .cta:hover { opacity:0.9; text-decoration:none; }
     footer { margin-top:3rem; padding-top:1.4rem; border-top:1px solid var(--border); font-size:0.85rem; color:var(--muted); }
   </style>
+  <link rel="stylesheet" href="../article-sidebar.css">
 </head>
 <body>
-  <div class="container">
+  <div class="container has-sidebar">
+    <div class="article-layout">
+    <div class="article-main">
     <header><a href="../index.html" class="logo">Occono</a></header>
     <a href="../index.html" class="back">← Back</a>
     <div class="meta">October 2026 · Tools</div>
@@ -72,6 +75,33 @@
       <p>By subscribing you agree to receive Occono emails. You can unsubscribe at any time. See our <a href="/privacy.html">privacy notice</a>.</p>
     </section>
 
+    </div>
+    <aside class="side-panel" aria-label="More from Occono">
+      <section class="side-card">
+        <h2>Free Automation Starter Pack</h2>
+        <p>A free practical PDF to automate your enquiries this week.</p>
+        <a class="side-cta" href="/#free-guide">Get the free guide</a>
+      </section>
+      <section class="side-card">
+        <h2>Tools we use</h2>
+        <ul class="tool-list">
+          <li>
+            <a href="https://systeme.io/?sa=sa0284007873ebd22f73c9d8439d9c24fc8d09c8e8" rel="sponsored noopener" target="_blank">Systeme.io</a>
+            <p>All-in-one funnels, email and courses, free plan.</p>
+          </li>
+          <li>
+            <a href="https://www.make.com/en/register?pc=occono" rel="sponsored noopener" target="_blank">Make</a>
+            <p>Visual automation, free plan.</p>
+          </li>
+          <li>
+            <a href="https://www.beehiiv.com/?via=occono-ghastly" rel="sponsored noopener" target="_blank">beehiiv</a>
+            <p>Newsletters, free plan.</p>
+          </li>
+        </ul>
+        <p class="side-note">Some links are <a href="/website-terms.html">affiliate links</a>: we may earn a commission at no extra cost to you.</p>
+      </section>
+    </aside>
+    </div>
     <footer>
       <p>© 2026 Occono</p>
     </footer>

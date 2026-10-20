@@ -79,6 +79,26 @@
       font-size: 0.85rem;
       color: var(--muted);
     }
+    .tool-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.9rem;
+    }
+    .tool-grid .card {
+      display: block;
+      margin-bottom: 0;
+      height: 100%;
+    }
+    .tool-note {
+      margin: 0.85rem 0 0;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    @media (min-width: 640px) {
+      .tool-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
     footer {
       margin-top: 4rem;
       padding-top: 1.5rem;
@@ -210,6 +230,25 @@
       </ul>
       <script async data-uid="158b485d64" src="https://occono.kit.com/158b485d64/index.js"></script>
       <p>You'll get the PDF by email (check your spam folder if it doesn't arrive), and you'll join the Occono email list for practical automation tips and news of the full pack. Unsubscribe any time. See our <a href="/privacy.html">privacy notice</a>.</p>
+    </section>
+
+    <section class="tools-we-use" aria-labelledby="tools-heading">
+      <h2 id="tools-heading">Tools we use</h2>
+      <div class="tool-grid">
+        <a class="card" href="https://systeme.io/?sa=sa0284007873ebd22f73c9d8439d9c24fc8d09c8e8" rel="sponsored noopener" target="_blank">
+          <h3>Systeme.io</h3>
+          <p>All-in-one funnels, email and courses, free plan.</p>
+        </a>
+        <a class="card" href="https://www.make.com/en/register?pc=occono" rel="sponsored noopener" target="_blank">
+          <h3>Make</h3>
+          <p>Visual automation, free plan.</p>
+        </a>
+        <a class="card" href="https://www.beehiiv.com/?via=occono-ghastly" rel="sponsored noopener" target="_blank">
+          <h3>beehiiv</h3>
+          <p>Newsletters, free plan.</p>
+        </a>
+      </div>
+      <p class="tool-note">Some links are <a href="/website-terms.html">affiliate links</a>: we may earn a commission at no extra cost to you.</p>
     </section>
 
     <footer>
