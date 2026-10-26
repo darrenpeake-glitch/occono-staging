@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIMi Backup privacy notice — Occono</title>
+  <meta name="description" content="How the personal AIMi Backup utility accesses and protects Google Drive data.">
+  <link rel="canonical" href="https://www.occono.co.uk/aimi-backup/privacy.html">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/site.css">
+  <style>
+    *{box-sizing:border-box}body{margin:0}.container{max-width:760px;margin:0 auto;padding:2rem 1.25rem}header{padding:1rem 0 1.5rem;border-bottom:1px solid var(--border);margin-bottom:2rem}a{color:var(--accent)}.logo{font-size:1.35rem;text-decoration:none}p,li{color:var(--text-soft)}footer{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);font-size:.9rem}nav{display:flex;gap:1rem;flex-wrap:wrap;margin-top:1rem}.meta{color:var(--muted);font-size:.9rem}
+  </style>
+</head>
+<body class="reading">
+  <a class="skip" href="#content">Skip to content</a>
+  <div class="container">
+    <header><a class="logo" href="/">Occono</a><nav aria-label="Page navigation"><a href="/aimi-backup/">AIMi Backup</a><a href="/aimi-backup/privacy.html" aria-current="page">Backup privacy notice</a></nav></header>
+    <main id="content">
+      <h1>AIMi Backup privacy notice</h1>
+      <p class="meta">Last updated: 26 October 2026</p>
+      <h2>Who operates the app</h2>
+      <p>Darren Peake operates AIMi Backup for his own home server and Google account. It is a personal backup utility, not a service accepting other people's accounts. Contact: <a href="mailto:darrenpeake@gmail.com">darrenpeake@gmail.com</a>.</p>
+      <h2>Google data accessed</h2>
+      <p>The app requests Google Drive's <code>drive.file</code> permission. It creates and reads its encrypted backup files and their metadata, and checks the authorised account's email address and storage quota. Access is limited to files created by, or explicitly made available to, the app. It does not request Gmail, Google Photos or general access to unrelated Drive files.</p>
+      <h2>Purpose and storage</h2>
+      <p>Access is used only to upload, verify and recover the operator's backups and check that the correct account has sufficient space. Restic encrypts backup contents and metadata on the home server before sending them to Google Drive.</p>
+      <p>Google authorisation tokens and the backup encryption password are stored in access-restricted files on the operator's server. Consistent database copies are prepared locally. Restore tests use separate local storage; successful test copies are removed after verification. Encrypted recovery material may include credentials needed to rebuild the server.</p>
+      <h2>Sharing and use limits</h2>
+      <p>Encrypted backups are stored with Google Drive. The app does not publish backup contents, sell Google user data, share it with advertisers or use it to train AI models. Google data is used only for the personal backup and recovery functions described here.</p>
+      <p>AIMi Backup's use and transfer of information received from Google APIs will adhere to the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including its Limited Use requirements.</p>
+      <h2>Retention and revoking access</h2>
+      <p>Backup snapshots are retained until the operator approves a retention or deletion action. Storage and snapshot limits stop new uploads rather than silently deleting recovery points. Google authorisation can be revoked through the <a href="https://myaccount.google.com/connections">Google Account connections page</a>.</p>
+      <p>Revoking access stops future authorised access; it does not automatically remove existing backups or local recovery copies. The operator can separately delete those copies when no longer required.</p>
+      <h2>This information page</h2>
+      <p>This page is hosted on GitHub Pages. The host may process technical request information, such as IP addresses, to deliver and secure the website. These AIMi Backup pages contain no forms, advertising or analytics scripts. The wider website has its own <a href="/privacy.html">website privacy notice</a>.</p>
+      <h2>Changes and enquiries</h2>
+      <p>This notice will be updated if the app's data practices change. Send questions about the app or its data to <a href="mailto:darrenpeake@gmail.com">darrenpeake@gmail.com</a>.</p>
+      <p><a href="/aimi-backup/">Return to AIMi Backup</a></p>
+    </main>
+    <footer><p>© 2026 Occono · <a href="/">Occono home</a> · <a href="/aimi-backup/">AIMi Backup</a></p></footer>
+  </div>
+</body>
+</html>
